@@ -1,20 +1,19 @@
-
-import CredentialsProvider from "next-auth/providers/credentials";
-import GithubProvider from "next-auth/providers/github";
+import Credentials from "next-auth/providers/credentials";
+import GitHubProvider from "next-auth/providers/github";
 import prisma from "./db";
 import { emailSchema, passwordSchema } from "../Schema/utils";
 import bcrypt from "bcryptjs";
-import { NextAuthOptions,Session } from "next-auth";
+import { NextAuthOptions, Session } from "next-auth";
 
 import { JWT } from "next-auth/jwt";
 
 export const authOptions = {
   providers: [
-    GithubProvider({
+    GitHubProvider({
       clientId: process.env.Github_Id || "",
       clientSecret: process.env.Github_Secret || "",
     }),
-    CredentialsProvider({
+    Credentials({
       name: "credentials",
       credentials: {
         email: { type: "email" },
@@ -60,64 +59,71 @@ export const authOptions = {
           }
           const passwordVerification = await bcrypt.compare(
             passwordValidation.data,
-            user.password
+            credentials.password
           );
           if (!passwordVerification) {
-            throw new Error("invaild password ");
+            throw new Error("invalid password ");
           }
           return user;
-        } catch (e) {}
+        } catch (e) {
+            console.error(e)
+        }
       },
     }),
-    ],
-    pages: {
-       signIn:"/auth"
+  ],
+  pages: {
+    signIn: "/auth",
+  },
+  secret: process.env.NEXTAUTH_SECRET ?? "secret",
+  session: {
+    strategy: "jwt",
+  },
+  callbacks: {
+    async jwt({ token, account, profile }) {
+      if (account && profile) {
+        token.email = profile.email as string;
+        token.id = account.access_token;
+      }
+      return token;
     },
-    session: {
-        strategy:"jwt"
-    },
-    callbacks: {
-        async jwt({token,account,profile}) {
-            if (account && profile) {
-                token.email = profile.email as string;
-                token.id = account.access_token; 
-            }
-            return token;
-        },
-        async session({session,token}:{session:Session, token:JWT}) {
-            try {
-                const user = await prisma.user.findUnique({
-                    where: {
-                        email:token.email
-                    }
-                })
-                if (user) {
-                    session.user.id = user.id;
-                }
-            } catch (e) {
-                console.error(e);
-                
-            }
-            return session;
-        },
-        async signIn({account,profile}) {
-            try {
-
-
-                if (account?.provider === "github") {
-                    const user = await prisma.user.findUnique
-                }
-                const newUser = await prisma.user.create({
-                    data: {
-                        email: profile?.email,
-                        password: profile.password,
-                        provider:"Credentials"
-                    }
-                })
-            } catch (e) {
-                console.error(e);
-                
-            }
+    async session({ session, token }: { session: Session; token: JWT }) {
+      try {
+        const user = await prisma.user.findUnique({
+          where: {
+            email: token.email || "",
+          },
+        });
+        if (user) {
+          session.user.id = user.id;
         }
-    }
-}satisfies NextAuthOptions;
+      } catch (e) {
+        console.error(e);
+      }
+      return session;
+    },
+    async signIn({ account, profile }) {
+      try {
+        if (account?.provider === "github") {
+          const user = await prisma.user.findUnique({
+            where: {
+              email: profile?.email,
+            },
+          });
+
+          if (!user) {
+            const newUser = await prisma.user.create({
+              data: {
+                email: profile?.email || "",
+                provider: "Github",
+              },
+            });
+          }
+        }
+        return true;
+      } catch (e) {
+        console.error(e);
+        return false 
+      }
+    },
+  },
+} satisfies NextAuthOptions;
