@@ -1,24 +1,18 @@
 "use client"
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
-import  LandingPage  from "@/components/Landing/LandingPage";
-import AuthScreen from "@/components/Auth/AuthScreen";
-import { SignInFlow } from "@/lib/utils";
+import LandingPage from "@/components/Landing/LandingPage";
+
+import { AppBar } from "@/components/AppBar/Appbar";
 
 
-export default function Home({ searchParams }: { searchParams: { authType: SignInFlow }}) {
-  const session = useSession();
-          const router = useRouter();
-          const formType = searchParams.authType;
-      
-          if (session.status === "authenticated") {
-              return router.push("/dashboard")
-          }
+
+export default function Home() {
+
   return (
     <div>
-      <LandingPage  />
-      <AuthScreen authType={formType} />
+      <AppBar />
+      <LandingPage />
+
     </div>
   );
 }
