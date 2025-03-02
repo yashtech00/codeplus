@@ -9,15 +9,72 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SignInFlow } from "@/lib/utils";
-import { useId } from "react";
-
-// interface SigninProp {
-//     setFormType: (state: SignInFlow) => void;
-// }
+import { signIn } from "next-auth/react";
+import { useId, useState } from "react";
+import { Toaster,toast } from "sonner";
+import Github from "next-auth/providers/github";
 
 
 function SigninPage() {
+    
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
+    const SigninProvider = (provider: "github"|"credentials") => {
+        try {
+            if (provider === "credentials") {
+                const res = signIn(provider, {
+                    email,
+                    password,
+                    redirect: false,
+                    callbackUrl:"/home",
+                })
+                res.then((res) => {
+                    if (res?.error) {
+                        setError(res.error);
+                        toast.error("Invalid Credentials")
+                    }else {
+                        toast.success("Successfully Signed Up")
+                    }
+                    setLoading(false);
+                })
+            }else if (provider === "github") {
+                const res = signIn(provider, {
+                    redirect: false,
+                    callbackUrl:"/home"
+                })
+                res.then((res) => {
+                    if (res?.error) {
+                        setError(res.error);
+                        toast.error("Invalid Github")
+                    }else {
+                        toast.success("Successfully Signed Up")
+                    }
+                    setLoading(false);
+                })
+            }
+        } catch (e) {
+            console.log(e);
+            setError("Internal server error");
+            setLoading(true);
+        }
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setError("");
+        SigninProvider("github")
+        
+    }
+    const handleGithub = (provider:"github") => {
+        setError("");
+        SigninProvider(provider);
+        setLoading(true);
+
+    }
+
     const id = useId();
     return (
         <Dialog>
@@ -49,12 +106,12 @@ function SigninPage() {
                     </DialogHeader>
                 </div>
 
-                <form className="space-y-5">
+                <form className="space-y-5" onSubmit={handleSubmit}>
                     <div className="space-y-4">
 
                         <div className="space-y-2">
                             <Label htmlFor={`${id}-email`}>Email</Label>
-                            <Input id={`${id}-email`} placeholder="hi@yourcompany.com" type="email" required />
+                            <Input id={`${id}-email`} placeholder="hi@yourcompany.com" type="email" required onChange={(e)=>setEmail(e.target.value)} />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor={`${id}-password`}>Password</Label>
@@ -63,11 +120,12 @@ function SigninPage() {
                                 placeholder="Enter your password"
                                 type="password"
                                 required
+                                onChange={(e)=>setPassword(e.target.value)}
                             />
                         </div>
                     </div>
                     <Button type="button" className="w-full">
-                        Sign up
+                        Sign In
                     </Button>
                 </form>
 
@@ -75,7 +133,7 @@ function SigninPage() {
                     <span className="text-xs text-muted-foreground">Or</span>
                 </div>
 
-                <Button variant="outline">Continue with Google</Button>
+                <Button variant="outline" onClick={()=>handleGithub("github")}>Continue with Github</Button>
 
                 <p className="text-center text-xs text-muted-foreground">
                     By signing up you agree to our{" "}
@@ -85,6 +143,7 @@ function SigninPage() {
                     .
                 </p>
             </DialogContent>
+            <Toaster/>
         </Dialog>
     );
 }
