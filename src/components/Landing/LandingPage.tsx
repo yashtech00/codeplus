@@ -1,12 +1,16 @@
+import { SignInFlow } from "@/lib/utils";
 import { AppBar } from "../AppBar/Appbar"
 import { BackgroundPaths } from "../ui/background-paths"
 
 
-export const LandingPage = () => {
+
+export default function LandingPage () {
+    
     return (
         <div>
             <AppBar />
-            <BackgroundPaths title="Code Plus"/>
+            <BackgroundPaths title="Code Plus" />
+           
         </div>
     )
 }
