@@ -14,13 +14,58 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
-  email    String @unique
-  password String?
-  provider Provider
+  id         String       @id @default(uuid())
+  email      String       @unique
+  password   String?
+  provider   Provider
+  submission Submission[]
 }
 
-enum Provider{
+model Problem {
+  id                String       @id @default(uuid())
+  title             String
+  description       String
+  inputDescription  String
+  outputDescription String
+  difficulty        String
+  companyName       String[]
+  likeCount         Int
+  dislikeCount      Int
+  submission        Submission[]
+  testCase          TestCase[]
+}
+
+model Submission {
+  if                 String  @id @default(uuid())
+  userId             String
+  problemId          String
+  sourcecode         String
+  languageId         String
+  status             String
+  judge0SubmissionId String?
+  executionTime      Int?
+  memoryUsed         Int?
+  errorMessage       String?
+  output             String?
+  user               User    @relation(fields: [userId], references: [id])
+  problem            Problem @relation(fields: [problemId], references: [id])
+}
+
+model TestCase {
+  id        String  @id @default(uuid())
+  problemId String
+  input     String
+  output    String
+  problem   Problem @relation(fields: [problemId], references: [id])
+}
+
+model Language {
+  id       String @id @default(uuid())
+  name     String @unique
+  judge0Id String @unique
+}
+
+enum Provider {
   Github
   Credentials
 }
