@@ -6,7 +6,7 @@ export const  ProblemSchema = z.object({
     inputDescription: z.string(),
     outputDescription: z.string(),
     difficulty: z.string(),
-    companyName: z.string(),
+    companyName:z.string().array(),
     likeCount: z.number(),
     dislikeCount: z.number(),
     submission: z.number().optional(),
