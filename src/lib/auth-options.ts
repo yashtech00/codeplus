@@ -66,7 +66,8 @@ export const authOptions = {
           }
           return user;
         } catch (e) {
-            console.error(e)
+          console.error(e)
+          return null
         }
       },
     }),

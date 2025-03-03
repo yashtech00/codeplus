@@ -1,3 +1,4 @@
+import { AdminAuthOptions } from "@/lib/admin-auth-options";
 import { authOptions } from "@/lib/auth-options";
 import prisma from "@/lib/db";
 import { ProblemSchema } from "@/Schema/problem";
@@ -6,7 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 export async function POST(req: NextRequest) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(AdminAuthOptions);
 
   if (!session?.user.id) {
     return NextResponse.json(
@@ -43,7 +44,8 @@ export async function POST(req: NextRequest) {
         difficulty: bodyData?.difficulty || "difficulty",
         companyName: bodyData?.companyName || ["[company Name]"],
         likeCount: bodyData?.likeCount || 0,
-        dislikeCount: bodyData?.dislikeCount || 0,
+            dislikeCount: bodyData?.dislikeCount || 0,
+            adminId: session?.user.id
       },
     });
     return NextResponse.json(
