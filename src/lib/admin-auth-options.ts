@@ -5,9 +5,6 @@ import prisma from "./db";
 import { signIn } from "next-auth/react";
 import { NextAuthOptions, Session } from "next-auth";
 
-
-
-
 export const AdminAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -32,9 +29,7 @@ export const AdminAuthOptions = {
       },
     }),
   ],
-  pages: {
-    signIn: "/AdminAuth",
-  },
+ 
   session: {
     strategy: "jwt",
 
@@ -53,7 +48,7 @@ export const AdminAuthOptions = {
       try {
         const user = await prisma.admin.findUnique({
           where: {
-            email: "sample@gmail.com",
+            email: "admin@gmail.com",
             password: "1234567890",
           },
         });

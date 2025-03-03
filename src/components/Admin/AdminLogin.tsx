@@ -35,11 +35,14 @@ function AdminSigninPage() {
     
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {  
         e.preventDefault();  
-        setError("");  
+        setError(""); 
+        console.log(email,password,"yashadmin");
+        
         const res = await signIn("credentials", {  
             email,  
             password,  
-            redirect: false,    
+            redirect: false,
+            callbackUrl:"/admin"
         });  
         if (res?.error) {  
             setError(res.error);  
@@ -66,7 +69,7 @@ function AdminSigninPage() {
         <div>  
             <Dialog open={isOpen} onOpenChange={handleClose}>  
                 {!session.data && (  
-                    <DialogContent>  
+                    <DialogContent> 
                         <div className="flex flex-col items-center gap-2">  
                             <div  
                                 className="flex size-11 shrink-0 items-center justify-center rounded-full border border-border cursor-pointer"  

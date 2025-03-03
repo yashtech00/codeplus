@@ -73,7 +73,7 @@ export const authOptions = {
     }),
   ],
   pages: {
-    signIn: "/auth",
+    signIn: "/auth/user",
   },
   secret: process.env.NEXTAUTH_SECRET ?? "secret",
   session: {
