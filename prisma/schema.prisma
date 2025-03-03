@@ -21,6 +21,13 @@ model User {
   submission Submission[]
 }
 
+model Admin {
+  id       String    @id @default(uuid())
+  email    String    @unique
+  password String
+  problems Problem[]
+}
+
 model Problem {
   id                String       @id @default(uuid())
   title             String
@@ -33,6 +40,8 @@ model Problem {
   dislikeCount      Int
   submission        Submission[]
   testCase          TestCase[]
+  adminId           String
+  admin             Admin        @relation(fields: [adminId], references: [id])
 }
 
 model Submission {
