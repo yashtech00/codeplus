@@ -12,6 +12,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useId, useState, useEffect } from "react";  
 import { Toaster, toast } from "sonner";  
 import AdminPage from "./AdminPage";  
+import { AdminAuthOptions } from "@/lib/admin-auth-options";
 
 function AdminSigninPage() {  
     const [email, setEmail] = useState("");  
@@ -22,7 +23,7 @@ function AdminSigninPage() {
     const [showErrorImage, setShowErrorImage] = useState(false); // Track whether to show error image/message  
     const [adminError, setAdminError] = useState(""); // Error message for admin panel  
 
-    const session = useSession();  
+    const session = useSession(AdminAuthOptions);  
 
     // Automatically open the dialog if not authenticated  
     useEffect(() => {  
