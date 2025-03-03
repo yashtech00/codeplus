@@ -53,6 +53,7 @@ export const authOptions = {
                 email: emailValidation.data,
                 password: hashedPassword,
                 provider: "Credentials",
+                role:"USER",
               },
             });
             return newUser;
@@ -80,8 +81,8 @@ export const authOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ token, account, profile }) {
-      if (account && profile) {
+    async jwt({ token, account, profile,user }) {
+      if (account && profile && user) {
         token.email = profile.email as string;
         token.id = account.access_token;
       }
@@ -116,6 +117,7 @@ export const authOptions = {
               data: {
                 email: profile?.email || "",
                 provider: "Github",
+                role:"USER"
               },
             });
           }

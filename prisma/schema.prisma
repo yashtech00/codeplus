@@ -19,6 +19,7 @@ model User {
   password   String?
   provider   Provider
   submission Submission[]
+  role Role @default(USER)
 }
 
 model Admin {
@@ -78,4 +79,9 @@ model Language {
 enum Provider {
   Github
   Credentials
+}
+
+enum Role {
+  ADMIN
+  USER
 }

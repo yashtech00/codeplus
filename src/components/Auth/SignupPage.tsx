@@ -29,7 +29,7 @@ function SignupPage() {
                     email,
                     password,
                     redirect: false,
-                    callbackUrl:"/home",
+                    callbackUrl:"/Home",
                 })
                 res.then((res) => {
                     if (res?.error) {
@@ -43,7 +43,7 @@ function SignupPage() {
             }else if (provider === "github") {
                 const res = signIn(provider, {
                     redirect: false,
-                    callbackUrl:"/home"
+                    callbackUrl:"/Home"
                 })
                 res.then((res) => {
                     if (res?.error) {
@@ -65,7 +65,7 @@ function SignupPage() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setError("");
-        SigninProvider("github")
+        SigninProvider("credentials")
         
     }
     const handleGithub = (provider:"github") => {
@@ -137,7 +137,7 @@ function SignupPage() {
                             />
                         </div>
                     </div>
-                    <Button type="button" className="w-full">
+                    <Button type="submit" className="w-full">
                         Sign up
                     </Button>
                 </form>
