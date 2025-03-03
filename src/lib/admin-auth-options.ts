@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { JWT } from "next-auth/jwt";
 import prisma from "./db";
 import { signIn } from "next-auth/react";
+import { NextAuthOptions, Session } from "next-auth";
 
 export const AdminAuthOptions = {
     providers: [
@@ -67,6 +68,9 @@ export const AdminAuthOptions = {
                         password:"1234567890"
                     }
                 })
+                if (user) {
+                    session.user.id = user.id
+                }
                 return user;
             } catch (e) {
                 console.error(e);
@@ -78,7 +82,18 @@ export const AdminAuthOptions = {
             }
         },
         async signIn({ account, profile }) {
-            
+            try {
+                const admin = await prisma.admin.findUnique({
+                    where: {
+                        email: "sample@gmail.com",
+                        password:"1234567890"
+                    }
+                })
+                return true;
+            } catch (e) {
+                console.error(e);
+                return false;
+            }
         }
     }
-}
+}satisfies NextAuthOptions
