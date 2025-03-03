@@ -5,6 +5,9 @@ import prisma from "./db";
 import { signIn } from "next-auth/react";
 import { NextAuthOptions, Session } from "next-auth";
 
+
+
+
 export const AdminAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -18,19 +21,14 @@ export const AdminAuthOptions = {
           return null;
         }
 
-        try {
-          const admin = await prisma.admin.findUnique({
-            where: {
-              email: "sample@gmail.com",
-              password: "1234567890",
-            },
-          });
-
-          return admin;
-        } catch (e) {
-          console.error(e);
-          return null;
-        }
+         // Mock authentication (replace this with your actual logic)  
+         if (credentials.email === "admin@gmail.com" && credentials.password === "1234567890") {  
+            // If the credentials are valid, return an object representing the user.  
+            return { id: 1, name: "Admin", email: "admin@example.com" };  
+          } else {  
+            // If you return null or false, the sign-in will fail  
+            return null;  
+          } 
       },
     }),
   ],
@@ -66,20 +64,6 @@ export const AdminAuthOptions = {
         console.error(e);
       }
       return session;
-    },
-    async signIn({ account, profile }) {
-      try {
-        const admin = await prisma.admin.findUnique({
-          where: {
-            email: "sample@gmail.com",
-            password: "1234567890",
-          },
-        });
-        return true;
-      } catch (e) {
-        console.error(e);
-        return false;
-      }
     },
   },
 } satisfies NextAuthOptions;

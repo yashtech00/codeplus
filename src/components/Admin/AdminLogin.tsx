@@ -12,7 +12,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useId, useState, useEffect } from "react";  
 import { Toaster, toast } from "sonner";  
 import AdminPage from "./AdminPage";  
-import { AdminAuthOptions } from "@/lib/admin-auth-options";
+
 
 function AdminSigninPage() {  
     const [email, setEmail] = useState("");  
@@ -23,7 +23,7 @@ function AdminSigninPage() {
     const [showErrorImage, setShowErrorImage] = useState(false); // Track whether to show error image/message  
     const [adminError, setAdminError] = useState(""); // Error message for admin panel  
 
-    const session = useSession(AdminAuthOptions);  
+    const session = useSession();  
 
     // Automatically open the dialog if not authenticated  
     useEffect(() => {  
@@ -32,38 +32,24 @@ function AdminSigninPage() {
         }  
     }, [session.data]);  
 
-    const SigninProvider = async (provider: "credentials") => {  
-        try {  
-            if (provider === "credentials") {  
-                setLoading(true); // Set loading at the beginning  
-                const res = await signIn(provider, {  
-                    email,  
-                    password,  
-                    redirect: false,  
-                    callbackUrl: "/admin",  
-                });  
-                if (res?.error) {  
-                    setError(res.error);  
-                    setShowErrorImage(true); // Show error image on invalid credentials  
-                    toast.error("Invalid Credentials");  
-                } else {  
-                    toast.success("Successfully Signed In");  
-                    setIsOpen(false); // Close dialog on successful sign in  
-                    setAdminError(""); // Reset any previous error  
-                }  
-                setLoading(false); // Stop loading  
-            }  
-        } catch (e) {  
-            console.log(e);  
-            setError("Internal server error");  
-            setLoading(false); // Ensure loading stops on error  
-        }  
-    };  
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {  
+    
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {  
         e.preventDefault();  
         setError("");  
-        SigninProvider("credentials");  
+        const res = await signIn("credentials", {  
+            email,  
+            password,  
+            redirect: false,    
+        });  
+        if (res?.error) {  
+            setError(res.error);  
+            setShowErrorImage(true); // Show error image on invalid credentials  
+            toast.error("Invalid Credentials");  
+        } else {  
+            toast.success("Successfully Signed In");  
+            setIsOpen(false); // Close dialog on successful sign in  
+            setAdminError(""); // Reset any previous error  
+        }    
     };  
 
     const handleClose = () => {  
