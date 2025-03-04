@@ -36,9 +36,9 @@ function AdminPage() {
             
           </div>
           <DialogHeader>
-            <DialogTitle className="text-left">Update your card</DialogTitle>
+            <DialogTitle className="text-left">New Problem</DialogTitle>
             <DialogDescription className="text-left">
-              Your new card will replace your current card.
+              Add New problem 
             </DialogDescription>
           </DialogHeader>
         </div>
@@ -46,7 +46,7 @@ function AdminPage() {
         <form className="space-y-5">
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor={`name-${id}`}>Name on card</Label>
+              <Label htmlFor={`name-${id}`}>Problem name</Label>
               <Input id={`name-${id}`} type="text" required />
             </div>
             <div className="space-y-2">
