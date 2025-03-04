@@ -12,10 +12,10 @@ import { SignupPage } from '../Auth/SignupPage'
 export const AppBar = () => {
 
     const navItems = [
-        { name: 'Home', url: '#', icon: Home },
-        { name: 'Problems', url: '', icon: User },
-        { name: 'Blogs', url: '#', icon: Briefcase },
-        { name: 'Review', url: '#', icon: FileText },
+        { name: 'Home', url: '/', icon: Home },
+        { name: 'Problems', url: '/Home', icon: User },
+        { name: 'Blogs', url: '/Blogs', icon: Briefcase },
+        { name: 'Review', url: '/Reviews', icon: FileText },
 
     ]
  
