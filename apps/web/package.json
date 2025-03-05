@@ -12,10 +12,12 @@
   },
   "dependencies": {
     "@repo/ui": "*",
+    "bcryptjs": "^3.0.2",
     "next": "^15.2.1",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^15.2.1",

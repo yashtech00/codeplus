@@ -1,7 +1,7 @@
 import Credentials from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import prisma from "../db/db";
-import { emailSchema, passwordSchema } from "../Schema/utils";
+import { emailSchema, passwordSchema } from "./schema";
 import bcrypt from "bcryptjs";
 import { NextAuthOptions, Session } from "next-auth";
 
