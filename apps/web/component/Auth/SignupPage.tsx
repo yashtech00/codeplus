@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signIn } from "next-auth/react";
 import { useId, useState } from "react";
-import { Toaster } from "../ui/sonner";
+import { Toaster } from "sonner";
 import { toast } from "sonner";
 
 

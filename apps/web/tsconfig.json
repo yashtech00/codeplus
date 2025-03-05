@@ -4,8 +4,12 @@
     "plugins": [
       {
         "name": "next"
-      }
-    ]
+      },
+      
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+      },
   },
   "include": [
     "**/*.ts",
