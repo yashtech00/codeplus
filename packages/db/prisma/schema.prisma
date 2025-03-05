@@ -13,78 +13,78 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id String @id @default(uuid())
-  name String?
-  email String @unique
-  password String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model User {
+  id         String       @id @default(uuid())
+  name       String?
+  email      String       @unique
+  password   String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
   submission Submission[]
 }
 
 model Problem {
-  id String @id @default(uuid())
-  title String
+  id          String        @id @default(uuid())
+  title       String
   description String
-  hidden Boolean @default(true)
-  slug String @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  difficulty Difficulty @default(MEDIUM)
+  hidden      Boolean       @default(true)
+  slug        String        @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  difficulty  Difficulty    @default(MEDIUM)
   defaultCode DefaultCode[]
-  submission Submission[]
+  submission  Submission[]
 }
 
 model DefaultCode {
-  id String @id @default(uuid())
-  languageId Int
-  problemId String
-  code String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  problem Problem @relation(fields: [problemId],references: [id])
-  language Language @relation(fields: [languageId],references: [id])
+  id         String   @id @default(uuid())
+  languageId String
+  problemId  String
+  code       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  problem    Problem  @relation(fields: [problemId], references: [id])
+  language   Language @relation(fields: [languageId], references: [id])
 }
 
 model Submission {
-  id String @id @default(uuid())
-  problemId String
+  id         String           @id @default(uuid())
+  problemId  String
   languageId String
-  userId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  code String
-  FullCode String
-  status SubmissionResult @default(PENDING)
-  testCases TestCase[]
-  memory Int?
-  time Float?
-  user User @relation(fields: [userId], references: [id])
-  problem Problem @relation(fields: [problemId], references: [id])
-  language Language @relation(fields: [languageId],references: [id])
+  userId     String
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  code       String
+  FullCode   String
+  status     SubmissionResult @default(PENDING)
+  testCases  TestCase[]
+  memory     Int?
+  time       Float?
+  user       User             @relation(fields: [userId], references: [id])
+  problem    Problem          @relation(fields: [problemId], references: [id])
+  language   Language         @relation(fields: [languageId], references: [id])
 }
 
 model TestCase {
-  id String 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  status TestCaseResult @default(PENDING)
-  index Int 
-  submission Submission @relation(fields: [submissionId],references: [id])
-  submissionId String
-  memory Int?
-  time Float?
-  judge0TrackingId String @unique
+  id               String
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  status           TestCaseResult @default(PENDING)
+  index            Int
+  submission       Submission     @relation(fields: [submissionId], references: [id])
+  submissionId     String
+  memory           Int?
+  time             Float?
+  judge0TrackingId String         @unique
 }
 
 model Language {
-  id String @id @default(uuid())
-  name String
-  judge0Id Int @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  submission Submission[]
+  id          String        @id @default(uuid())
+  name        String
+  judge0Id    Int           @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  submission  Submission[]
   defaultCode DefaultCode[]
 }
 
@@ -101,7 +101,7 @@ enum SubmissionResult {
 }
 
 enum TestCaseResult {
-  AC 
+  AC
   FAIL
   TLE
   COMPILATION_ERROR
