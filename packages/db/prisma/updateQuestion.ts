@@ -1,7 +1,5 @@
-import { error } from "console";
 import fs from "fs";
 import { prismaClient } from "../src";
-import { object } from "zod";
 import { LANGUAGE_MAPPING } from "../../common/language";
 
 const MOUNT_PATH = process.env.MOUNT_FILE || "../../app/problems";

@@ -38,19 +38,20 @@ model Problem {
 
 model DefaultCode {
   id         String   @id @default(uuid())
-  languageId String
+  languageId Int
   problemId  String
   code       String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   problem    Problem  @relation(fields: [problemId], references: [id])
   language   Language @relation(fields: [languageId], references: [id])
+  @@unique([problemId,languageId])
 }
 
 model Submission {
   id         String           @id @default(uuid())
   problemId  String
-  languageId String
+  languageId Int
   userId     String
   createdAt  DateTime         @default(now())
   updatedAt  DateTime         @updatedAt
@@ -79,7 +80,7 @@ model TestCase {
 }
 
 model Language {
-  id          String        @id @default(uuid())
+  id          Int        @id @default(autoincrement())
   name        String
   judge0Id    Int           @unique
   createdAt   DateTime      @default(now())
