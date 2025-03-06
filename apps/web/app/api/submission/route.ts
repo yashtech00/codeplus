@@ -8,6 +8,10 @@ import { getProblem } from "../../../lib/problem";
 
 const JUDGE0_URI = process.env.JUDGE0_URI ?? "http://localhost:3000" 
 
+const LANGUAGE_MAPPING = {  
+
+}
+
 export async function POST(req: NextRequest) {
     const session = await getServerSession(authOptions);
     if (!session?.user) {
@@ -78,6 +82,7 @@ export async function POST(req: NextRequest) {
 
     await prisma.testCase.createMany({
         data: problem.inputs.map((input, index) => ({
+            id: `${submission.id}-${index}`, // Assuming id can be generated like this
             judge0TrackingId: response.data[index].token,
             submissionId: submission.id,
             index: index,
