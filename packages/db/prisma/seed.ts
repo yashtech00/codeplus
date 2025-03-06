@@ -1,5 +1,5 @@
 import { prismaClient } from "../src";
-import { LANGUAGE_MAPPING } from "@repo/common/language";
+import { LANGUAGE_MAPPING } from "../../common/language/index";
 
 (async () =>
   await prismaClient.language.createMany({

@@ -8,9 +8,7 @@ import { getProblem } from "../../../lib/problem";
 
 const JUDGE0_URI = process.env.JUDGE0_URI ?? "http://localhost:3000" 
 
-const LANGUAGE_MAPPING = {  
 
-}
 
 export async function POST(req: NextRequest) {
     const session = await getServerSession(authOptions);

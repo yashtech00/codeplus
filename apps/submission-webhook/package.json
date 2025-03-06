@@ -16,7 +16,6 @@
     "@repo/db":"*"
   },
   "devDependencies": {
-    "@types/express": "^5.0.0",
-    "@repo/db":"*"
+    "@types/express": "^5.0.0"
   }
 }

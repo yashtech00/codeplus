@@ -1,13 +1,13 @@
 import express from 'express'
 
 import { SubmissionCallback } from "@repo/common/zod";
-import prisma from './db/db';
+import prisma from './db';
 import { outputMapping } from './outputMapping';
 
 const app = express();
 app.use(express.json());
 
-app.put('/submission-callbacks', async(req, res) => {
+app.put('/submission-callback', async(req, res) => {
     const parsedBody = SubmissionCallback.safeParse(req.body);
 
     if (!parsedBody.success) {
@@ -71,3 +71,4 @@ app.put('/submission-callbacks', async(req, res) => {
 
 
 })
+app.listen(process.env.PORT || 3001);
