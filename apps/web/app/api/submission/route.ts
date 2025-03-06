@@ -3,8 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../../lib/auth-Options";
 import prisma from "../../../db/db";
 // import { SubmissionInput } from "@repo/common/zod";
+import axios from "axios"
+import { getProblem } from "../../../lib/problem";
 
-
+const JUDGE0_URI = process.env.JUDGE0_URI ?? "http://localhost:3000" 
 
 export async function POST(req: NextRequest) {
     const session = await getServerSession(authOptions);
@@ -15,7 +17,7 @@ export async function POST(req: NextRequest) {
             status:401,
         })
     }
-
+    //TODO: Validate the submission input
     const submissionInput = await  req.json();
     if(!submissionInput) {
         return NextResponse.json({
@@ -47,7 +49,30 @@ export async function POST(req: NextRequest) {
         submissionInput.data.code,
     )
 
-    const response = await .post(
-         ``
+    const response = await axios.post(
+        `${JUDGE0_URI}/submissions/batch?base64_encoded=false `,
+        {
+            submissions: problem.inputs.map((input, index) => ({
+                language_id: LANGUAGE_MAPPING[submissionInput.data.languageId]?.judgge0,
+                source_code: problem.fullBoilerPlate,
+                stdin: input,
+                expected_output: problem.outputs[index],
+                callback_url:
+                    process.env.JUDGE0_CALLBACK_URL ??
+                    "http://localhost:3000/api/submission-callback",
+                
+            }))
+        }
     )
+
+    const submission = await prisma.submission.create({
+        data: {
+            userId: session.user.id,
+            problemId: submissionInput.data.problemId,
+            languageId: LANGUAGE_MAPPING[submissionInput.data.languageId]?.internal,
+            code: submissionInput.data.code,
+            FullCode:problem.fullBoilerPlate,
+            status: "PENDING",   
+        }
+    })
 }
