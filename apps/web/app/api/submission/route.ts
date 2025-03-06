@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
                 expected_output: problem.outputs[index],
                 callback_url:
                     process.env.JUDGE0_CALLBACK_URL ??
-                    "http://localhost:3000/api/submission-callback",
+                    "http://localhost:3001/submission-webhook/submission-callback",
                 
             }))
         }
