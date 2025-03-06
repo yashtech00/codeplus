@@ -1,26 +1,11 @@
 import express from 'express'
 
-import { SubmissionCallback } from '@repo/common/zod'; // Adjust the path as necessary
+import { SubmissionCallback } from "@repo/common/zod";
 import prisma from './db/db';
+import { outputMapping } from './outputMapping';
 
 const app = express();
 app.use(express.json());
-
-
-const outputMapping = {
-    "Accepted": "ACCEPTED",
-    "Compilation Error": "COMPILATION_ERROR",
-    "Time Limit Exceeded": "TLE",
-    "Runtime Error": "RUNTIME_ERROR",
-    "Wrong Answer": "WRONG_ANSWER",
-    "Presentation Error": "PRESENTATION_ERROR",
-    "Memory Limit Exceeded": "MEMORY_LIMIT_EXCEEDED",
-    "Judge0 Error": "JUDGE0_ERROR",
-    "Judge0 Time Limit Exceeded": "JUDGE0_TIME_LIMIT_EXCEEDED",
-    "Judge0 Runtime Error": "JUDGE0_RUNTIME_ERROR",
-    "Judge0 Wrong Answer": "JUDGE0_WRONG_ANSWER",
-    "Judge0 Presentation Error": "JUDGE0_PRESENTATION_ERROR",
-}
 
 app.put('/submission-callbacks', async(req, res) => {
     const parsedBody = SubmissionCallback.safeParse(req.body);
