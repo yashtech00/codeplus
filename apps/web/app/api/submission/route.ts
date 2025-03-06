@@ -138,5 +138,16 @@ export async function GET(req:NextResponse) {
         })
     }
 
-    const testcase = await 
+    const testcase = await prisma.testCase.findMany({
+        where: {
+            submissionId:submissionId
+        }
+
+    })
+    return NextResponse.json({
+        submission,
+        testcase
+    }, {
+        status:200
+    })
 }
