@@ -75,4 +75,20 @@ export async function POST(req: NextRequest) {
             status: "PENDING",   
         }
     })
+
+    await prisma.testCase.createMany({
+        data: problem.inputs.map((input, index) => ({
+            judge0TrackingId: response.data[index].token,
+            submissionId: submission.id,
+            index: index,
+            status: "PENDING",
+        }))
+    })
+
+    return NextResponse.json({
+        message:"Submission Successful",
+        data:{
+            submissionId:submission.id,
+        }
+    })
 }
