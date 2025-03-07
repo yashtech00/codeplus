@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../../lib/auth-Options";
-import prisma from "../../../db/db";
+import prisma from "../../../db";
 // import { SubmissionInput } from "@repo/common/zod";
 import axios from "axios";
 import { getProblem } from "../../../lib/problem";
