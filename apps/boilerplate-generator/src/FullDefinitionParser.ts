@@ -105,7 +105,7 @@ export class FullProblemDefinitionParser {
       `;
     }
   
-    generateRust(): string {
+    generateRs(): string {
       const inputs = this.inputFields
         .map((field) => `${field.name}: ${this.mapTypeToRust(field.type)}`)
         .join(", ");

@@ -1,5 +1,7 @@
 import path from 'path'
 import fs from 'fs'
+import { FullProblemDefinitionParser } from './FullDefinitionParser';
+import { ProblemDefinitionParser } from './ProblemDefinitionParser';
 
 function generatePartialBoilerPlate(generatorFilePath:string) {
     const inputFilePath = path.join(__dirname, generatorFilePath, "Structure.md")
@@ -32,7 +34,7 @@ function generateFullBoilerPlate(generatorFilePath: string) {
     const boilerFilePath = path.join(__dirname, generatorFilePath, "boilerPlate-Full");
 
     const input = fs.readFileSync(inputFilePath, "utf-8");
-    const parser = new FullDefinitionParser();
+    const parser = new FullProblemDefinitionParser();
     parser.parse(input);
 
     const cppCode = parser.generateCpp();
@@ -49,3 +51,6 @@ function generateFullBoilerPlate(generatorFilePath: string) {
     console.log("Full BoilerPlate code is generated successfully");
     
 }
+
+generatePartialBoilerPlate(process.env.GENERATOR_FILE_PATH ?? "");
+generateFullBoilerPlate(process.env.GENERATOR_FILE_PATH ?? "");
