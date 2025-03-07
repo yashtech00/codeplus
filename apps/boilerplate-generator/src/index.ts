@@ -32,7 +32,7 @@ function generateFullBoilerPlate(generatorFilePath: string) {
     const boilerFilePath = path.join(__dirname, generatorFilePath, "boilerPlate-Full");
 
     const input = fs.readFileSync(inputFilePath, "utf-8");
-    const parser = new FulldefinitionParser();
+    const parser = new FullDefinitionParser();
     parser.parse(input);
 
     const cppCode = parser.generateCpp();
