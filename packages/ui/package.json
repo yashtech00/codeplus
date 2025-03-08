@@ -9,7 +9,15 @@
   ],
   "exports": {
     "./styles.css": "./dist/index.css",
-    "./*": "./src/*.tsx"
+    "./*": "./src/*.tsx",
+    "./button": "./src/@/components/ui/button.tsx",
+    "./card": "./src/@/components/ui/card.tsx",
+    "./avatar": "./src/@/components/ui/avatar.tsx",
+    "./table": "./src/@/components/ui/table.tsx",
+    "./select": "./src/@/components/ui/select.tsx",
+    "./label": "./src/@/components/ui/label.tsx",
+    "./textarea": "./src/@/components/ui/textarea.tsx",
+    "./tabs": "./src/@/components/ui/tabs.tsx"
   },
   "license": "MIT",
   "scripts": {
