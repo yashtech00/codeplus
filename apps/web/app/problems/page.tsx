@@ -1,9 +1,11 @@
 "use client";
 
+import { Problems } from "../../component/Problems";
+
 export default function problemList() {
     return (
         <div>
-            <h1>Problem List</h1>
+            <Problems/>
         </div>
 )
 

@@ -27,6 +27,8 @@ model Problem {
   id          String        @id @default(uuid())
   title       String
   description String
+  solved      Int    @default(0)
+  companyName String
   hidden      Boolean       @default(true)
   slug        String        @unique
   createdAt   DateTime      @default(now())
