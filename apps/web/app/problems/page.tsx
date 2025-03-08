@@ -4,8 +4,9 @@ import { Problems } from "../../component/Problems";
 
 export default function problemList() {
     return (
-        <div className=" bg-neutral-950 h-screen">
-            <main >
+        <div className=" ">
+             
+            <main className="">
                 
                 <Problems />
                 </main>

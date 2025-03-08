@@ -21,6 +21,9 @@ export async function Filter({ problem }: FilterProps) {
 
     const handleSearch = (e) => {
         e.preventDefault();
+        const sercheProblems = problem.filter((fp) => {
+            if (fp.toLowerCase().includes(search.toLowerCase())) { return fp } 
+        })
         
     }
 
