@@ -100,9 +100,7 @@ export function BackgroundPaths({
                             </span>
                         ))}
                     </h1>
-                    <div className="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-12">
-                        <span>hello</span>
-                        </div>
+
                     <div
                         className="inline-block group relative bg-gradient-to-b from-black/10 to-white/10 
                         dark:from-white/10 dark:to-black/10 p-px rounded-2xl backdrop-blur-lg 

@@ -17,7 +17,7 @@
     "next-env.d.ts",
     "next.config.ts",
     ".next/types/**/*.ts"
-  ],
+, "../../../../../practice full stack/codeplusyash/my-app/src/app/provider.tsx", "tailwind.config.ts"  ],
   "exclude": ["node_modules"]
 }
 

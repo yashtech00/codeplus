@@ -1,4 +1,4 @@
-import { Button } from "../../src/component/ui/button";
+import { Button } from "@/components/ui/button";
 import {
     Dialog,
     DialogContent,
@@ -79,7 +79,7 @@ function SignupPage() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline" className="relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors bg-black text-white border-0 hover:bg-white hover:text-black">Sign up</Button>
+                <button >Sign up</button>
             </DialogTrigger>
             <DialogContent>
                 <div className="flex flex-col items-center gap-2">

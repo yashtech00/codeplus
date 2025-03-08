@@ -1,4 +1,4 @@
-import { Button } from "../../src/component/ui/button";
+import { Button } from "@/components/ui/button";
 import {
     Dialog,
     DialogContent,
@@ -12,7 +12,6 @@ import { Label } from "@/components/ui/label";
 import { signIn } from "next-auth/react";
 import { useId, useState } from "react";
 import { Toaster,toast } from "sonner";
-import Github from "next-auth/providers/github";
 
 
 function SigninPage() {
@@ -74,12 +73,12 @@ function SigninPage() {
         setLoading(true);
 
     }
-
+// className="relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors bg-black text-white border-0 hover:bg-white hover:text-black"
     const id = useId();
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline" className="relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors bg-black text-white border-0 hover:bg-white hover:text-black">Sign In</Button>
+                <button >Sign In</button>
             </DialogTrigger>
             <DialogContent>
                 <div className="flex flex-col items-center gap-2">
