@@ -1,25 +1,40 @@
 import prisma from ".";
 
-export const getProblems = async () => {
-    const problems = await prisma.problem.findMany({
+export const getProblem = async (problemId: string, contestId?: string) => {
+  if (contestId) {
+
+    const problem = await prisma.problem.findFirst({
       where: {
-        hidden: false,
+        id: problemId,
       },
       include: {
         defaultCode: true,
       },
     });
-    return problems;
+    return problem;
+  }
+
+  const problem = await prisma.problem.findFirst({
+    where: {
+      id: problemId,
+    },
+    include: {
+      defaultCode: true,
+    },
+  });
+  return problem;
 };
-  
-export const getProblem = async (problemId:string) => {
-    const problem = await prisma.problem.findFirst({
-        where: {
-          id: problemId,
-        },
-        include: {
-          defaultCode: true,
-        },
-      });
-      return problem;
-    }
+
+export const getProblems = async () => {  
+    console.log("Fetching problems from the database...");  
+    const problems = await prisma.problem.findMany({  
+      where: {  
+        hidden: false,  
+      },  
+      include: {  
+        defaultCode: true,  
+      },  
+    });  
+    console.log("Problems retrieved:", problems);  
+    return problems;  
+  };  
