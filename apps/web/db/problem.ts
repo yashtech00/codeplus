@@ -26,7 +26,7 @@ export const getProblem = async (problemId: string, contestId?: string) => {
 };
 
 export const getProblems = async () => {  
-    console.log("Fetching problems from the database...");  
+     
     const problems = await prisma.problem.findMany({  
       where: {  
         hidden: false,  
@@ -35,6 +35,5 @@ export const getProblems = async () => {
         defaultCode: true,  
       },  
     });  
-    console.log("Problems retrieved:", problems);  
     return problems;  
   };  

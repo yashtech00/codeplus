@@ -1,4 +1,3 @@
-"use client"
 
 import { ProblemStatement } from "../../../component/ProblemStatement";
 // import { ProblemSubmitBar } from "../../../components/ProblemSubmitBar";
