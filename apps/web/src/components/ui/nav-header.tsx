@@ -17,10 +17,12 @@ function NavHeader() {
       onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
     >
       <Link href={"/"}><Tab setPosition={setPosition}>Home</Tab></Link>
-      <Tab setPosition={setPosition}>Pricing</Tab>
-      <Tab setPosition={setPosition}>About</Tab>
-      <Tab setPosition={setPosition}>Services</Tab>
-      <Tab setPosition={setPosition}>Contact</Tab>
+      <Link href={"/problems"}><Tab setPosition={setPosition} >Problems</Tab></Link>
+     <Link href={"/Blog"}> <Tab setPosition={setPosition}>Blog</Tab></Link>
+      <Link href={{
+        pathname:"/"
+      }}> <Tab setPosition={setPosition}>Login</Tab></Link>
+     <Link> <Tab setPosition={setPosition}>Signup</Tab></Link>
 
       <Cursor position={position} />
     </ul>
