@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -61,8 +62,8 @@ function SigninPage() {
         }
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         setError("");
         SigninProvider("credentials")
         
@@ -73,7 +74,6 @@ function SigninPage() {
         setLoading(true);
 
     }
-// className="relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors bg-black text-white border-0 hover:bg-white hover:text-black"
     const id = useId();
     return (
         <Dialog>

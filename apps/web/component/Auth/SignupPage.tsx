@@ -62,7 +62,7 @@ function SignupPage() {
         }
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError("");
         SigninProvider("credentials")

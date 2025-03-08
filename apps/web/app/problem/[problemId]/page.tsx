@@ -17,9 +17,9 @@ export default async function ProblemPage({
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-neutral-950 to-neutral-900">
       <main className="flex-1 py-8 md:py-12 grid md:grid-cols-2 gap-8 md:gap-12">
-        <div className="bg-white  rounded-lg shadow-md p-6">
+        <div className="rounded-xl border border-neutral-700 bg-neutral-800/50 backdrop-blur-sm overflow-hidden shadow-xl p-6">
           <div className="prose prose-stone dark:prose-invert">
             <ProblemStatement description={problem.description} />
           </div>
