@@ -1,23 +1,31 @@
-## Sum Element
+## Two sum
 
-Given an array of integers, return the sum of all elements at a given index.
+Find the sum of two given elements. Both the numbers will always be 0 or postiive.
 
-#### Example 1
+#### Test case 1
 
-```
-Input: arr = [1,2,3,4,5]
-Output: 15
-```
-Explanation: The sum of all elements in the array is 1 + 2 + 3 + 4 + 5 = 15.
-
-
-
-#### Example 2
+Input
 
 ```
-Input: arr = [1,1,1,4,5]
-Output: 12
+1, 2
 ```
 
-Explanation:
-The sum of all elements in the array is 1 + 1 + 1 + 4 + 5 = 12.       
+Output
+
+```
+3
+```
+
+#### Test case 2
+
+Input
+
+```
+1, 100
+```
+
+Output
+
+```
+100
+```

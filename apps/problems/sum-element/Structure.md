@@ -1,8 +1,7 @@
-Problem Name : "Sum Element"
-Problem Description : Given an array of integers, return the sum of all elements at a given index.
-Function Name : sumElement
-Input Structure :
-Input Field: list<int>arr
+Problem Name: "Sum of Two Numbers"
+Function Name: sum
+Input Structure:
+Input Field: int num1
+Input Field: int num2
 Output Structure:
 Output Field: int result
-

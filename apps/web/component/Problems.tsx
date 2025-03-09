@@ -25,7 +25,8 @@ export async function Problems({ searchParams }: { searchParams?: { q?: string }
           problem.companyName.toLowerCase().includes(query),
       )
     : problems
-
+      console.log(problems);
+      
   return (
     <div className="min-h-screen bg-gradient-to-b from-neutral-950 to-neutral-900 p-4 md:p-8">
       <div className="max-w-6xl mx-auto">

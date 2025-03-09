@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../../lib/auth-Options";
 import prisma from "../../../db";
-// import { SubmissionInput } from "@repo/common/zod";
+import {SubmissionInput } from "@repo/common/zod";
 import axios from "axios";
 import { getProblem } from "../../../lib/problem";
 import { LANGUAGE_MAPPING } from "../../../../../packages/common/language";
@@ -10,7 +10,7 @@ import { LANGUAGE_MAPPING } from "../../../../../packages/common/language";
 const JUDGE0_URI = process.env.JUDGE0_URI ?? "http://localhost:3000";
 
 export async function POST(req: NextRequest) {
-  const session = await getServerSession(authOptions);
+  const session: { user: { id: string } } | null = await getServerSession(authOptions);
   if (!session?.user) {
     return NextResponse.json(
       {
@@ -22,8 +22,8 @@ export async function POST(req: NextRequest) {
     );
   }
   //TODO: Validate the submission input
-  const submissionInput = await req.json();
-  if (!submissionInput) {
+  const submissionParsed = SubmissionInput.safeParse(await req.json());
+  if (!submissionParsed.success) {
     return NextResponse.json(
       {
         message: "Invalid submission input",
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
 
   const dbProblem = await prisma.problem.findUnique({
     where: {
-      id: submissionInput.data.problemId,
+      id: submissionParsed.data.problemId,
     },
   });
   if (!dbProblem) {
@@ -52,58 +52,69 @@ export async function POST(req: NextRequest) {
 
   const problem = await getProblem(
     dbProblem.slug,
-    submissionInput.data.languageId
+    submissionParsed.data.languageId
   );
   problem.fullBoilerPlate = problem.fullBoilerPlate.replace(
     "##USER_CODE_HERE##",
-    submissionInput.data.code
+    submissionParsed.data.code
   );
 
-  const response = await axios.post(
-    `${JUDGE0_URI}/submissions/batch?base64_encoded=false `,
-    {
-      submissions: problem.inputs.map((input, index) => ({
-        language_id: LANGUAGE_MAPPING[submissionInput.data.languageId]?.judge0,
-        source_code: problem.fullBoilerPlate,
-        stdin: input,
-        expected_output: problem.outputs[index],
-        callback_url:
-          process.env.JUDGE0_CALLBACK_URL ??
-          "http://localhost:3001/submission-webhook/submission-callback",
+  try {
+    const response = await axios.post(
+      `${JUDGE0_URI}/submissions/batch?base64_encoded=false `,
+      {
+        submissions: problem.inputs.map((input, index) => ({
+          language_id: LANGUAGE_MAPPING[submissionParsed.data.languageId]?.judge0,
+          source_code: problem.fullBoilerPlate,
+          stdin: input,
+          expected_output: problem.outputs[index],
+          callback_url:
+            process.env.JUDGE0_CALLBACK_URL ??
+            "http://localhost:3001/submission-webhook/submission-callback",
+        })),
+      }
+    );
+  
+    const submission = await prisma.submission.create({
+      data: {
+        userId: session.user.id,
+        problemId: submissionParsed.data.problemId,
+        languageId: LANGUAGE_MAPPING[submissionParsed.data.languageId]?.internal ?? 0,
+        code: submissionParsed.data.code,
+        FullCode: problem.fullBoilerPlate,
+        status: "PENDING",
+      },
+    });
+  
+    await prisma.testCase.createMany({
+      data: problem.inputs.map((input, index) => ({
+        id: `${submission.id}-${index}`, // Assuming id can be generated like this
+        judge0TrackingId: response.data[index].token,
+        submissionId: submission.id,
+        index: index,
+        status: "PENDING",
       })),
-    }
-  );
+    });
+  
+    return NextResponse.json({
+      message: "Submission Successful",
+      id: submission.id,
+    });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({
+      message:"Internal server error during submissions"
+    }, {
+      status:500
+    })
+    
+  }
 
-  const submission = await prisma.submission.create({
-    data: {
-      userId: session.user.id,
-      problemId: submissionInput.data.problemId,
-      languageId: LANGUAGE_MAPPING[submissionInput.data.languageId]?.internal ?? 0,
-      code: submissionInput.data.code,
-      FullCode: problem.fullBoilerPlate,
-      status: "PENDING",
-    },
-  });
-
-  await prisma.testCase.createMany({
-    data: problem.inputs.map((input, index) => ({
-      id: `${submission.id}-${index}`, // Assuming id can be generated like this
-      judge0TrackingId: response.data[index].token,
-      submissionId: submission.id,
-      index: index,
-      status: "PENDING",
-    })),
-  });
-
-  return NextResponse.json({
-    message: "Submission Successful",
-    id: submission.id,
-  });
 }
 
 export async function GET(req:NextResponse) {
 
-    const session = await getServerSession(authOptions);
+    const session: { user: { id: string } } | null = await getServerSession(authOptions);
     if (!session?.user) {
         return NextResponse.json({
             message:"You are not logged in"
