@@ -2,13 +2,14 @@
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Editor from "@monaco-editor/react"
+import { useEffect, useState } from "react"
 
 interface ProblemsProp{
     title:string
 }
 
 export async function ProblemSubmitBar({problems}:{problems:ProblemsProp}) {
-
+    const [activeTab, setActiveTab] = useState("problem");
 
     return (
         <div className="bg-neutral-800 rounded-2xl p-4">
@@ -20,9 +21,10 @@ export async function ProblemSubmitBar({problems}:{problems:ProblemsProp}) {
                 </TabsList>
                 </Tabs>
             </div>
-            <div>
-                <SubmitProblem prbolem={ problems} />
+            <div className={`${activeTab==="problem"? "" : "hidden"}`}>
+                <SubmitProblem problem={ problems} />
             </div>
+            {activeTab === "submissions" && <Submission problem={ problems} />}
         </div>
     )
 }
@@ -47,6 +49,23 @@ function SubmitProblem({
             
             
             />
+        </div>
+    )
+}
+
+function Submission({ problem }: { problem: ProblemsProp }) {
+    
+    const [submission,setSubmission] = useState<submissionProp[]>([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await axios.POST(`/api/submission/bulk?problemId=${problem.id}`)
+        }
+    })
+
+    return (
+        <div>
+            <SubmissionTable submission={submission} />
         </div>
     )
 }
