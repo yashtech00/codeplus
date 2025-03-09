@@ -5,10 +5,12 @@ import remarkGfm from "remark-gfm";
 export function ProblemStatement({ description }: { description: string }) {  
   return (  
     <div className="prose lg:prose-xl text-white">  
-      <Markdown  
-        children={description}  
-        remarkPlugins={[remarkGfm]} // Ensure this is properly set  
-      />  
+      {description ? (  
+        <Markdown remarkPlugins={[remarkGfm]}>{description}</Markdown>  
+      ) : (  
+        <p>No description provided.</p>  
+      )}  
     </div>  
   );  
 }  
+

@@ -15,6 +15,7 @@ export default async function ProblemPage({
   if (!problem) {
     return <div>Problem not found</div>;
   }
+  
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-neutral-950 to-neutral-900">
