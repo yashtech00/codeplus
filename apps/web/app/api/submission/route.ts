@@ -5,6 +5,7 @@ import prisma from "../../../db";
 // import { SubmissionInput } from "@repo/common/zod";
 import axios from "axios";
 import { getProblem } from "../../../lib/problem";
+import { LANGUAGE_MAPPING } from "../../../../../packages/common/language";
 
 const JUDGE0_URI = process.env.JUDGE0_URI ?? "http://localhost:3000";
 
@@ -62,7 +63,7 @@ export async function POST(req: NextRequest) {
     `${JUDGE0_URI}/submissions/batch?base64_encoded=false `,
     {
       submissions: problem.inputs.map((input, index) => ({
-        language_id: LANGUAGE_MAPPING[submissionInput.data.languageId]?.judgge0,
+        language_id: LANGUAGE_MAPPING[submissionInput.data.languageId]?.judge0,
         source_code: problem.fullBoilerPlate,
         stdin: input,
         expected_output: problem.outputs[index],
@@ -77,7 +78,7 @@ export async function POST(req: NextRequest) {
     data: {
       userId: session.user.id,
       problemId: submissionInput.data.problemId,
-      languageId: LANGUAGE_MAPPING[submissionInput.data.languageId]?.internal,
+      languageId: LANGUAGE_MAPPING[submissionInput.data.languageId]?.internal ?? 0,
       code: submissionInput.data.code,
       FullCode: problem.fullBoilerPlate,
       status: "PENDING",

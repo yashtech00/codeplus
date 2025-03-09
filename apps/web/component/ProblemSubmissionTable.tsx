@@ -1,6 +1,6 @@
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-interface submissionProp {
+export interface submissionProp {
     id: string;
 
 }
