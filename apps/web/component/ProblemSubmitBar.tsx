@@ -10,11 +10,11 @@ import { SelectItem } from "@radix-ui/react-select"
 import { Button } from "@/components/ui/button"
 import { CheckIcon } from "lucide-react"
 
-interface ProblemsProp {
+ export interface ProblemsProp {
     id: string,
-    title: string
+    title: string,
     description: string,
-    slug: string
+    slug: string,
     defaultCode: {
         code: string,
         languageId: number,
@@ -69,6 +69,7 @@ function SubmitProblem({
     const [testCase, setTestCase] = useState<any>([]);
 
     useEffect(() => {
+        if (!problem || !problem.defaultCode) return;
         const defaultCode: { [key: string]: string } = {};
         problem.defaultCode.forEach((code) => {
           const language = Object.keys(LANGUAGE_MAPPING).find(
