@@ -4,7 +4,9 @@
 
 /* @custom-variant dark (&:is(.dark *)); */
 
-
+.markdown > * {
+    all: revert;
+}
   
 
 :root {

@@ -1,6 +1,6 @@
 
 import { ProblemStatement } from "../../../component/ProblemStatement";
-// import { ProblemSubmitBar } from "../../../components/ProblemSubmitBar";
+import { ProblemSubmitBar } from "../../../component/ProblemSubmitBar";
 import { getProblem } from "../../../db/problem";
 
 export default async function ProblemPage({
@@ -25,7 +25,7 @@ export default async function ProblemPage({
             <ProblemStatement description={problem.description} />
           </div>
         </div>
-        {/* <ProblemSubmitBar problem={problem} /> */}
+        <ProblemSubmitBar problem={problem} />
       </main>
     </div>
   );
