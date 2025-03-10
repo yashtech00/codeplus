@@ -7,7 +7,7 @@ import axios from "axios";
 import { getProblem } from "../../../lib/problem";
 import { LANGUAGE_MAPPING } from "../../../../../packages/common/language";
 
-const JUDGE0_URI = process.env.JUDGE0_URI ?? "http://localhost:3000";
+const JUDGE0_URI = "http://localhost:3001/submission-callback";
 
 export async function POST(req: NextRequest) {
   const session: { user: { id: string } } | null = await getServerSession(authOptions);
@@ -60,20 +60,36 @@ export async function POST(req: NextRequest) {
   );
 
   try {
-    const response = await axios.post(
-      `${JUDGE0_URI}/submissions/batch?base64_encoded=false `,
-      {
-        submissions: problem.inputs.map((input, index) => ({
-          language_id: LANGUAGE_MAPPING[submissionParsed.data.languageId]?.judge0,
-          source_code: problem.fullBoilerPlate,
-          stdin: input,
-          expected_output: problem.outputs[index],
-          callback_url:
-            process.env.JUDGE0_CALLBACK_URL ??
-            "http://localhost:3001/submission-webhook/submission-callback",
-        })),
-      }
-    );
+    try {  
+      const response = await axios.post(  
+        `${JUDGE0_URI}/submissions/batch?base64_encoded=false`,  
+        {  
+          submissions: problem.inputs.map((input, index) => ({  
+            language_id: LANGUAGE_MAPPING[submissionParsed.data.languageId]?.judge0,  
+            source_code: problem.fullBoilerPlate,  
+            stdin: input,  
+            expected_output: problem.outputs[index],  
+            callback_url: JUDGE0_URI,  
+          })),  
+        }  
+      );  
+      console.log("Judge0 Response:", response.data);  
+    } catch (error) {  
+      if (axios.isAxiosError(error)) {  
+        console.error("Error response:", error.response?.data);  
+        console.error("Error status:", error.response?.status);  
+        console.error("Error details:", error.message);  
+      } else {  
+        console.error('Unexpected error:', error);  
+      }  
+      
+      return NextResponse.json({  
+        message: "Internal server error during submissions",  
+      }, {  
+        status: 500  
+      });  
+    }  
+    
   
     const submission = await prisma.submission.create({
       data: {

@@ -109,13 +109,18 @@ function SubmitProblem({
 
   async function Submit() {
     setStatus(SubmitStatus.PENDING)
-    setTestCase((t: any[]) => t.map((tc) => ({ ...tc, status: "PENDING" })))
-    const res = await axios.post(`/api/submission/`, {
-      code: code[language],
-      languageId: language,
-      problemId: problem.id,
-    })
-    submitPoll(res.data.id, 10)
+      setTestCase((t: any[]) => t.map((tc) => ({ ...tc, status: "PENDING" })));
+      try {
+        const res = await axios.post(`/api/submission/`, {
+            code: code[language],
+            languageId: language,
+            problemId: problem.id,
+          })
+          submitPoll(res.data.id, 10) 
+      } catch (e) {
+          console.error(e);
+      }
+  
   }
 
   return (

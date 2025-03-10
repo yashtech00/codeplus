@@ -8,7 +8,7 @@ interface Problem  {
     inputs: string[],
     outputs: string[]
 }
- const MOUNT_FILE =  "/home/ubuntu/code-plus/apps/problems"
+ const MOUNT_FILE =  "/web dev/projects/CodePlus/my-code/apps/problems"
 export const getProblem = async(
     problemId: string,
     languageId:SUPPORTED_LANGS
