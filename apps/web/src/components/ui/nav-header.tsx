@@ -20,14 +20,23 @@ function NavHeader() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      toast("You are not logged in");
-      router.push("/");
-    }
-  }, [status, router]); // Ensure this only runs when status changes
+  // useEffect(() => {
+  //   if (status === "unauthenticated") {
+  //     toast("You are not logged in");
+  //     router.push("/");
+  //   }
+  // }, [status, router]); // Ensure this only runs when status changes
 
-  if (status === "loading") return null; // Prevents premature rendering
+  // if (status === "loading") return null; // Prevents premature rendering
+
+  const handleProblem = () => {
+    if (!session?.user) {
+      toast("you ar not logged in")
+      router.push("/");
+    } else {
+      router.push("/problems")
+    }
+  }
 
   return (
     <>
@@ -39,12 +48,9 @@ function NavHeader() {
           <Tab setPosition={setPosition}>Home</Tab>
         </Link>
 
-        {session?.user ? (
-          <Link href={"/problems"}>
-            <Tab setPosition={setPosition}>Problems</Tab>
-          </Link>
-        ) : null}
-
+       
+            <Tab setPosition={setPosition}><button  onClick={handleProblem} className=" cursor-pointer">Problems</button></Tab>
+          
         <Tab setPosition={setPosition}>Blog</Tab>
         <Tab setPosition={setPosition}>
           <SigninPage />
