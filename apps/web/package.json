@@ -46,6 +46,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^10.1.0",
+    "react-toastify": "^11.0.5",
     "remark-gfm": "^4.0.1",
     "sonner": "^2.0.1",
     "sooner": "^1.1.4",

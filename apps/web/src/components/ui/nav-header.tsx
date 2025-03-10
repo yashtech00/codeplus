@@ -1,10 +1,14 @@
-"use client"; 
+"use client";
 
-import React, { useRef, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { SignupPage } from "../../../component/Auth/SignupPage";
 import { SigninPage } from "../../../component/Auth/Signinpage";
+import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";
+import { Toaster } from "sonner";
+import { useRouter } from "next/navigation";
 
 function NavHeader() {
   const [position, setPosition] = useState({
@@ -13,19 +17,46 @@ function NavHeader() {
     opacity: 0,
   });
 
-  return (
-    <ul
-      className="relative mx-auto flex w-fit rounded-full border-2 border-gray-400 bg-natural-950 text-white p-1 "
-      onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
-    >
-      <Link href={"/"}><Tab setPosition={setPosition}>Home</Tab></Link>
-      <Link href={"/problems"}><Tab setPosition={setPosition} >Problems</Tab></Link>
-       <Tab setPosition={setPosition}>Blog</Tab>
-      <Tab setPosition={setPosition}><SigninPage/></Tab>
-      <Tab setPosition={setPosition}><SignupPage/></Tab>
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
-      <Cursor position={position} />
-    </ul>
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      toast("You are not logged in");
+      router.push("/");
+    }
+  }, [status, router]); // Ensure this only runs when status changes
+
+  if (status === "loading") return null; // Prevents premature rendering
+
+  return (
+    <>
+      <ul
+        className="relative mx-auto flex w-fit rounded-full border-2 border-gray-400 bg-natural-950 text-white p-1"
+        onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
+      >
+        <Link href={"/"}>
+          <Tab setPosition={setPosition}>Home</Tab>
+        </Link>
+
+        {session?.user ? (
+          <Link href={"/problems"}>
+            <Tab setPosition={setPosition}>Problems</Tab>
+          </Link>
+        ) : null}
+
+        <Tab setPosition={setPosition}>Blog</Tab>
+        <Tab setPosition={setPosition}>
+          <SigninPage />
+        </Tab>
+        <Tab setPosition={setPosition}>
+          <SignupPage />
+        </Tab>
+
+        <Cursor position={position} />
+      </ul>
+      <Toaster />
+    </>
   );
 }
 
@@ -36,7 +67,7 @@ const Tab = ({
   children: React.ReactNode;
   setPosition: any;
 }) => {
-  const ref = useRef<HTMLLIElement>(null);
+  const ref = React.useRef<HTMLLIElement>(null);
   return (
     <li
       ref={ref}

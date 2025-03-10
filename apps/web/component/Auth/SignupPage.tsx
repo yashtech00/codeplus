@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useId, useState } from "react";
 import { Toaster } from "sonner";
 import { toast } from "sonner";
@@ -21,6 +21,7 @@ function SignupPage() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const session = useSession()
 
     const SigninProvider = (provider: "github"|"credentials") => {
         try {
@@ -29,7 +30,7 @@ function SignupPage() {
                     email,
                     password,
                     redirect: false,
-                    callbackUrl:"/Home",
+                    callbackUrl:"/",
                 })
                 res.then((res) => {
                     if (res?.error) {
@@ -43,7 +44,7 @@ function SignupPage() {
             }else if (provider === "github") {
                 const res = signIn(provider, {
                     redirect: false,
-                    callbackUrl:"/Home"
+                    callbackUrl:"/"
                 })
                 res.then((res) => {
                     if (res?.error) {
@@ -79,7 +80,13 @@ function SignupPage() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <button >Sign up</button>
+               {session?.data?.user ? (
+                                   ""
+                               ) : ( 
+                               <button  >
+                               Sign up
+                           </button>)}
+                              
             </DialogTrigger>
             <DialogContent>
                 <div className="flex flex-col items-center gap-2">

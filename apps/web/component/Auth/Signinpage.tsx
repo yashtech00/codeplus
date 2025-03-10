@@ -12,45 +12,45 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useId, useState } from "react";
-import { Toaster,toast } from "sonner";
+import { Toaster, toast } from "sonner";
 
 
 function SigninPage() {
-    
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const session = useSession();
 
-    const SigninProvider = (provider: "github"|"credentials") => {
+    const SigninProvider = (provider: "github" | "credentials") => {
         try {
             if (provider === "credentials") {
                 const res = signIn(provider, {
                     email,
                     password,
                     redirect: false,
-                    callbackUrl:"/Home",
+                    callbackUrl: "/",
                 })
                 res.then((res) => {
                     if (res?.error) {
                         setError(res.error);
                         toast.error("Invalid Credentials")
-                    }else {
+                    } else {
                         toast.success("Successfully Signed Up")
                     }
                     setLoading(false);
                 })
-            }else if (provider === "github") {
+            } else if (provider === "github") {
                 const res = signIn(provider, {
                     redirect: false,
-                    callbackUrl:"/Home"
+                    callbackUrl: "/"
                 })
                 res.then((res) => {
                     if (res?.error) {
                         setError(res.error);
                         toast.error("Invalid Github")
-                    }else {
+                    } else {
                         toast.success("Successfully Signed Up")
                     }
                     setLoading(false);
@@ -67,9 +67,9 @@ function SigninPage() {
         event.preventDefault();
         setError("");
         SigninProvider("credentials")
-        
+
     }
-    const handleGithub = (provider:"github") => {
+    const handleGithub = (provider: "github") => {
         setError("");
         SigninProvider(provider);
         setLoading(true);
@@ -78,18 +78,20 @@ function SigninPage() {
     const id = useId();
     return (
         <Dialog>
-            <DialogTrigger asChild>
-                {session?.user ? (
-                     <button onClick={() => signOut({ callbackUrl: "/" })} >
-                     Logout
-                 </button>
-                ) : (
-                    <button >
-                    Sign In
+
+            {session?.data?.user ? (
+                <button onClick={() => signOut({ callbackUrl: "/" })} >
+                    Logout
                 </button>
-                )}
-               
-            </DialogTrigger>
+            ) : (
+                <DialogTrigger asChild>
+                    <button >
+                        Sign In
+                    </button>
+                </DialogTrigger>
+            )}
+
+
             <DialogContent>
                 <div className="flex flex-col items-center gap-2">
                     <div
@@ -120,7 +122,7 @@ function SigninPage() {
 
                         <div className="space-y-2">
                             <Label htmlFor={`${id}-email`}>Email</Label>
-                            <Input id={`${id}-email`} placeholder="hi@yourcompany.com" type="email" required onChange={(e)=>setEmail(e.target.value)} />
+                            <Input id={`${id}-email`} placeholder="hi@yourcompany.com" type="email" required onChange={(e) => setEmail(e.target.value)} />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor={`${id}-password`}>Password</Label>
@@ -129,7 +131,7 @@ function SigninPage() {
                                 placeholder="Enter your password"
                                 type="password"
                                 required
-                                onChange={(e)=>setPassword(e.target.value)}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
                     </div>
@@ -142,7 +144,7 @@ function SigninPage() {
                     <span className="text-xs text-muted-foreground">Or</span>
                 </div>
 
-                <Button variant="outline" onClick={()=>handleGithub("github")}>Continue with Github</Button>
+                <Button variant="outline" onClick={() => handleGithub("github")}>Continue with Github</Button>
 
                 <p className="text-center text-xs text-muted-foreground">
                     By signing up you agree to our{" "}
@@ -152,7 +154,7 @@ function SigninPage() {
                     .
                 </p>
             </DialogContent>
-            <Toaster/>
+            <Toaster />
         </Dialog>
     );
 }

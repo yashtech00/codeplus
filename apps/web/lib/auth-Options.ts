@@ -53,7 +53,6 @@ export const authOptions = {
                 email: emailValidation.data,
                 password: hashedPassword,
                 provider: "Credentials",
-                role:"USER",
               },
             });
             return newUser;
@@ -74,7 +73,7 @@ export const authOptions = {
     }),
   ],
   pages: {
-    signIn: "/auth/user",
+    signIn: "/auth",
   },
   secret: process.env.NEXTAUTH_SECRET ?? "secret",
   session: {
@@ -117,7 +116,6 @@ export const authOptions = {
               data: {
                 email: profile?.email || "",
                 provider: "Github",
-                role:"USER"
               },
             });
           }

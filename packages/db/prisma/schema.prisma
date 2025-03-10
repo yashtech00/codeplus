@@ -17,7 +17,7 @@ model User {
   id         String       @id @default(uuid())
   name       String?
   email      String       @unique
-  password   String
+  password   String?
   provider Provider
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
