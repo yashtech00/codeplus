@@ -1,3 +1,5 @@
+
+
 import { getProblems } from "../db/problem"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
@@ -29,7 +31,7 @@ export async function Problems({ searchParams }: { searchParams?: { q?: string }
       
   return (
     <div className="min-h-screen bg-gradient-to-b from-neutral-950 to-neutral-900 p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto mt-20">
         <div className="mb-8 space-y-4">
           <h1 className="text-3xl font-bold text-white tracking-tight">Coding Problems</h1>
           <p className="text-neutral-400">Practice your coding skills with these challenges</p>

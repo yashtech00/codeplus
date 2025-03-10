@@ -60,35 +60,22 @@ export async function POST(req: NextRequest) {
   );
 
   try {
-    try {  
-      const response = await axios.post(  
-        `${JUDGE0_URI}/submissions/batch?base64_encoded=false`,  
-        {  
-          submissions: problem.inputs.map((input, index) => ({  
-            language_id: LANGUAGE_MAPPING[submissionParsed.data.languageId]?.judge0,  
-            source_code: problem.fullBoilerPlate,  
-            stdin: input,  
-            expected_output: problem.outputs[index],  
-            callback_url: JUDGE0_URI,  
-          })),  
-        }  
-      );  
-      console.log("Judge0 Response:", response.data);  
-    } catch (error) {  
-      if (axios.isAxiosError(error)) {  
-        console.error("Error response:", error.response?.data);  
-        console.error("Error status:", error.response?.status);  
-        console.error("Error details:", error.message);  
-      } else {  
-        console.error('Unexpected error:', error);  
-      }  
-      
-      return NextResponse.json({  
-        message: "Internal server error during submissions",  
-      }, {  
-        status: 500  
-      });  
-    }  
+    console.log("yash before response");
+    
+    const response = await axios.post(
+      `${JUDGE0_URI}/submission/batch?base64_encoded=false `,
+      {
+        submissions: problem.inputs.map((input, index) => ({
+          language_id: LANGUAGE_MAPPING[submissionParsed.data.languageId]?.judge0,
+          source_code: problem.fullBoilerPlate,
+          stdin: input,
+          expected_output: problem.outputs[index],
+          callback_url:
+            "http://localhost:3001/submission-callback",
+        })),
+      }
+    );
+    console.log(response,"yash submission response");
     
   
     const submission = await prisma.submission.create({
@@ -104,7 +91,7 @@ export async function POST(req: NextRequest) {
   
     await prisma.testCase.createMany({
       data: problem.inputs.map((input, index) => ({
-        id: `${submission.id}-${index}`, // Assuming id can be generated like this
+         id:"2",// Assuming id can be generated like this
         judge0TrackingId: response.data[index].token,
         submissionId: submission.id,
         index: index,

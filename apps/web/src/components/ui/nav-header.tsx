@@ -15,7 +15,7 @@ function NavHeader() {
 
   return (
     <ul
-      className="relative mx-auto flex w-fit rounded-full border-2 border-gray-400 bg-natural-950 text-white p-1 mt-6"
+      className="relative mx-auto flex w-fit rounded-full border-2 border-gray-400 bg-natural-950 text-white p-1 "
       onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
     >
       <Link href={"/"}><Tab setPosition={setPosition}>Home</Tab></Link>

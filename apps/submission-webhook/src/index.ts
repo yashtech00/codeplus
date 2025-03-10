@@ -6,55 +6,67 @@ import { outputMapping } from './outputMapping';
 const app = express();  
 app.use(express.json());  
 
-app.put('/submission-callback', async (req: Request, res: Response) => {  
-    console.log("yash before parsed");  
+// Handle both POST and PUT requests for /submission-callback  
+app.post('/submission-callback', async (req: Request, res: Response) => {  
+    console.log("Handling POST request");  
 
-    const parsedBody = SubmissionCallback.safeParse(req.body);  
-    console.log(parsedBody, "yash parsed");  
+    // Extract relevant fields  
+    const { judge0TrackingId, submissionId, status, time, memory } = req.body;  
 
-    if (!parsedBody.success) {  
-        console.error("Validation failed:", parsedBody.error);  
+    if (!judge0TrackingId || !submissionId || !status) {  
         return res.status(400).json({  
-            message: "Invalid Inputs",  
-            errors: parsedBody.error,  
+            message: "Missing required fields: judge0TrackingId, submissionId, or status."  
         });  
     }  
 
     try {  
-        // Check if the TestCase exists  
+        // Check if the test case already exists  
         const existingTestCase = await prisma.testCase.findUnique({  
-            where: {  
-                judge0TrackingId: parsedBody.data.token,  
-            },  
+            where: { judge0TrackingId },  
         });  
 
-        if (!existingTestCase) {  
-            console.error("No TestCase found with the given judge0TrackingId:", parsedBody.data.token);  
-            return res.status(404).json({  
-                message: "TestCase Not Found",  
+        if (existingTestCase) {  
+            console.log("Test case exists, updating...");  
+
+            // If it exists, handle it with the PUT logic  
+            const updatedTestCase = await prisma.testCase.update({  
+                where: { judge0TrackingId },  
+                data: {  
+                    status: outputMapping[status], // Map the status if necessary  
+                    time: time || 0,  
+                    memory: memory || 0,  
+                }  
             });  
+
+            // Additional logic if needed after updating...  
+
+            return res.status(200).json(updatedTestCase);  
+        } else {  
+            console.log("Test case does not exist, creating...");  
+
+            // If it does not exist, create a new test case  
+            const newTestCase = await prisma.testCase.create({  
+                data: {  
+                    submissionId,  
+                    status: outputMapping[status], // Map the status if necessary  
+                    time: time || 0,  
+                    memory: memory || 0,  
+                    index: 0, // Initialize index with a default value  
+                    judge0TrackingId, // Include judge0TrackingId  
+                }  
+            });  
+
+            return res.status(201).json(newTestCase);  
         }  
-
-        // Proceed with the update if the TestCase exists  
-        const testCase = await prisma.testCase.update({  
-            where: {  
-                judge0TrackingId: parsedBody.data.token,  
-            },  
-            data: {  
-                status: outputMapping[parsedBody.data.status.description],  
-                time: Number(parsedBody.data.time),  
-                memory: Number(parsedBody.data.memory),  
-            },  
-        });  
-
-        // Continue with the rest of your logic...  
-
-        res.send("Received");  
     } catch (e) {  
-        console.error("An error occurred: ", e);  
-        res.status(500).send("Internal Server Error");  
+        console.error(e);  
+        return res.status(500).json({  
+            message: "Internal Server Error",  
+        });  
     }  
 });  
+
+// Start your Express app  
 app.listen(process.env.PORT || 3001, () => {  
     console.log(`Submission webhook is running on port ${process.env.PORT || 3001}`);  
 });  

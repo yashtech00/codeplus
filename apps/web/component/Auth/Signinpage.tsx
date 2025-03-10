@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signIn } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useId, useState } from "react";
 import { Toaster,toast } from "sonner";
 
@@ -21,6 +21,7 @@ function SigninPage() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const session = useSession();
 
     const SigninProvider = (provider: "github"|"credentials") => {
         try {
@@ -78,7 +79,16 @@ function SigninPage() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <button >Sign In</button>
+                {session?.user ? (
+                     <button onClick={() => signOut({ callbackUrl: "/" })} >
+                     Logout
+                 </button>
+                ) : (
+                    <button >
+                    Sign In
+                </button>
+                )}
+               
             </DialogTrigger>
             <DialogContent>
                 <div className="flex flex-col items-center gap-2">

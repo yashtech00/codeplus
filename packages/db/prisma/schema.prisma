@@ -18,6 +18,7 @@ model User {
   name       String?
   email      String       @unique
   password   String
+  provider Provider
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   submission Submission[]
@@ -69,7 +70,7 @@ model Submission {
 }
 
 model TestCase {
-  id               String
+  id               String  @id @default(uuid())
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
   status           TestCaseResult @default(PENDING)
@@ -109,4 +110,9 @@ enum TestCaseResult {
   TLE
   COMPILATION_ERROR
   PENDING
+}
+
+enum Provider{
+  Github
+  Credentials
 }

@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth";
+import { getServerSession, User } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../../../lib/auth-Options";
 import prisma from "../../../../db";
@@ -6,7 +6,7 @@ import prisma from "../../../../db";
 
 
 export async function GET(req:NextRequest) {
-    const session = await getServerSession(authOptions);
+    const session: { user: User & { id: string } } | null = await getServerSession(authOptions);
     if (!session?.user) {
         return NextResponse.json({
             message:"You are not logged in"
