@@ -34,9 +34,7 @@ async function main(problemSlug: string) {
         title: problemSlug,  
         slug: problemSlug,  
         description: problemStatement,  
-        companyName: problemDetail, // Add the required companyName property 
-        difficulty: problemDetail,
-        
+        companyName: problemDetail, // Add the required companyName property  
       },  
       update: {  
         description: problemStatement,  

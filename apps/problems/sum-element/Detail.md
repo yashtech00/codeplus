@@ -1,2 +1,1 @@
-Difficulty:Easy
-Company Name:Amazon, Flipcart, Zomato, Google 
+Company Name: Amazon, Flipcart, Zomato, Google 
