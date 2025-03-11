@@ -25,7 +25,7 @@ export default async function ProblemPage({
             <ProblemStatement description={problem.description} />
           </div>
         </div>
-        <ProblemSubmitBar problems={problem} />
+        <ProblemSubmitBar problem={problem} />
       </main>
     </div>
   );

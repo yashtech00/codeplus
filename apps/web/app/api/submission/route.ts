@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
     submissionParsed.data.code  
   );  
 
-   
+  try {  
     console.log("JUDGE0_URI:", JUDGE0_URI);  
    
     const submissionsPayload = problem.inputs.map((input, index) => ({  
@@ -107,7 +107,7 @@ export async function POST(req: NextRequest) {
       data: problem.inputs.map((input, index) => ({  
         judge0TrackingId: response.data[index].token,  
         submissionId: submission.id,  
-        index,  
+        index: index,  
         status: "PENDING",  
       })),  
     });  
@@ -115,9 +115,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({  
       message: "Submission Successful",  
       id: submission.id,  
-    }, {
-      status:200
-    });    
+    });  
+  } catch (e) {  
+    console.error("Error during Judge0 request:", e.response?.data || e.message || e);  
+    return NextResponse.json({  
+      message: "Internal server error during submissions",  
+    }, {  
+      status: 500  
+    });  
+  }  
 }  
 
 // GET function stays the same...  
