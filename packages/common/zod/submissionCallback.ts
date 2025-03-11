@@ -1,16 +1,16 @@
 import z from "zod";  
 
 export const SubmissionCallback = z.object({  
-  stdout: z.string().optional().nullable(), // Optional and can be null  
-  time: z.string().optional().nullable(),   // Optional and can be null  
-  memory: z.number().optional().nullable(),  // Optional and can be null  
-  stderr: z.string().optional().nullable(),  // Optional and can be null  
-  token: z.string(),                         // Required string  
-  compile_output: z.string().optional().nullable(), // Optional and can be null  
-  message: z.string().optional().nullable(), // Optional and can be null  
+  stdout: z.string().optional().nullable(),  
+  time: z.string().optional().nullable(),  
+  memory: z.number().optional().nullable(),  
+  stderr: z.string().optional().nullable(),  
+  token: z.string(),  
+  compile_output: z.string().optional().nullable(),  
+  message: z.string().optional().nullable(),  
   status: z.object({  
-    id: z.string(),                          // Required string  
-    description: z.enum([                    // Required enum  
+    id: z.union([z.string(), z.number()]),  // Allow both string and number  
+    description: z.enum([
       "Accepted",  
       "Rejected",  
       "Runtime Error (NZEC)",  
@@ -20,4 +20,4 @@ export const SubmissionCallback = z.object({
       "Wrong Answer",  
     ]),  
   }),  
-});  
+});

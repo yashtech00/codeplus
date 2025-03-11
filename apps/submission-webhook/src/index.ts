@@ -15,7 +15,18 @@ const PORT = 3001;
 // app.use(bodyParser.json()); 
 app.put("/submission-callback", async (req, res) => {
     console.log("Received callback:", req.body); // Log the incoming request body 
-  const parsedBody = SubmissionCallback.safeParse(req.body);
+    console.log("Received status.id:", req.body.status.id, "Type:", typeof req.body.status.id);
+
+    const transformedBody = {
+        ...req.body,
+        status: {
+          ...req.body.status,
+          id: String(req.body.status.id), // Convert number to string
+        },
+      };
+      
+      const parsedBody = SubmissionCallback.safeParse(transformedBody);
+      
     console.log(parsedBody,"yash test parsedBidy");
     
     if (!parsedBody.success) {  
@@ -62,7 +73,10 @@ app.put("/submission-callback", async (req, res) => {
   // This can also lead to a race condition where two test case webhooks are sent at the same time
   // None of them would update the status of the submission
   if (pendingTestcases.length === 0) {
-    const accepted = failedTestcases.length === 0;
+      const accepted = failedTestcases.length === 0;
+      console.log(accepted,"submission webhook:accepted status");
+      console.log("before resonse");
+      
     const response = await prismaClient.submission.update({
       where: {
         id: testCase.submissionId,
@@ -81,12 +95,13 @@ app.put("/submission-callback", async (req, res) => {
        
       }
     });
-      console.log(res,"tests case res");
+      console.log(response,"after tests case response");
       
   }
   res.status(200).json({ message: 'Callback received successfully' });  
 });
 
-app.listen(PORT, () => {  
-    console.log(`Server listening on http://localhost:${PORT}`);  
-  });  
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server listening on http://localhost:${PORT}`);
+  });
+  

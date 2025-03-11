@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
     submissionParsed.data.code  
   );  
 
-  try {  
+   
     console.log("JUDGE0_URI:", JUDGE0_URI);  
    
     const submissionsPayload = problem.inputs.map((input, index) => ({  
@@ -71,14 +71,17 @@ export async function POST(req: NextRequest) {
       source_code: problem.fullBoilerPlate,  
       stdin: input,  
       expected_output: problem.outputs[index],  
-      callback_url: "https://internally-mutual-foxhound.ngrok-free.app/submission-callback",  
+      callback_url: "https://d9f7-49-36-27-251.ngrok-free.app/submission-callback",  
     }));  
 
     console.log("Submissions payload:", JSON.stringify(submissionsPayload, null, 2));  
 
     const response = await axios.post(  
-      `${JUDGE0_URI}/submissions/batch?base64_encoded=false`,  
-      { submissions: submissionsPayload },  
+      `${JUDGE0_URI}/submissions/batch`, 
+      { 
+        base64_encoded: 'false',
+        submissions: submissionsPayload 
+      },  
       {  
          headers: {  
              'x-rapidapi-host': 'judge0-ce.p.rapidapi.com',  
@@ -87,8 +90,6 @@ export async function POST(req: NextRequest) {
          }  
       }  
   );  
-
-    console.log(response, "yash submission response");  
 
     const submission = await prisma.submission.create({  
       data: {  
@@ -100,12 +101,13 @@ export async function POST(req: NextRequest) {
         status: "PENDING",  
       },  
     });  
-
+    console.log(submission,"yash after webhook submission");
+    
     await prisma.testCase.createMany({  
       data: problem.inputs.map((input, index) => ({  
         judge0TrackingId: response.data[index].token,  
         submissionId: submission.id,  
-        index: index,  
+        index,  
         status: "PENDING",  
       })),  
     });  
@@ -113,15 +115,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({  
       message: "Submission Successful",  
       id: submission.id,  
-    });  
-  } catch (e) {  
-    console.error("Error during Judge0 request:", e.response?.data || e.message || e);  
-    return NextResponse.json({  
-      message: "Internal server error during submissions",  
-    }, {  
-      status: 500  
-    });  
-  }  
+    }, {
+      status:200
+    });    
 }  
 
 // GET function stays the same...  
