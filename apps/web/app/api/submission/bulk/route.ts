@@ -6,7 +6,7 @@ import prisma from "../../../../db";
 
 
 export async function GET(req:NextRequest) {
-    const session: { user: User & { id: string } } | null = await getServerSession(authOptions);
+    const session = await getServerSession(authOptions);
     if (!session?.user) {
         return NextResponse.json({
             message:"You are not logged in"
@@ -18,6 +18,8 @@ export async function GET(req:NextRequest) {
     const url = new URL(req.url);
     const searchParams = new URLSearchParams(url.search);
     const problemId = searchParams.get("problemId");
+    console.log(problemId,"yash problemid");
+    
 
     if (!problemId) {
         return NextResponse.json({

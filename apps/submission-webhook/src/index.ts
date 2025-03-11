@@ -1,72 +1,92 @@
-import express, { Request, Response } from 'express';  
-import { SubmissionCallback } from "@repo/common/zod";  
-import prisma from './db';  
-import { outputMapping } from './outputMapping';  
+import express from "express";
+import prismaClient from "./db";
+import { SubmissionCallback } from "@repo/common/zod";
+import { outputMapping } from "./outputMapping";
 
-const app = express();  
-app.use(express.json());  
+import cors from 'cors';  
 
-// Handle both POST and PUT requests for /submission-callback  
-app.post('/submission-callback', async (req: Request, res: Response) => {  
-    console.log("Handling POST request");  
+ // Enable CORS for all routes  
+const app = express();
+app.use(express.json());
+app.use(cors());
+const PORT = 3001;  
 
-    // Extract relevant fields  
-    const { judge0TrackingId, submissionId, status, time, memory } = req.body;  
-
-    if (!judge0TrackingId || !submissionId || !status) {  
-        return res.status(400).json({  
-            message: "Missing required fields: judge0TrackingId, submissionId, or status."  
+// Middleware to parse JSON bodies  
+// app.use(bodyParser.json()); 
+app.put("/submission-callback", async (req, res) => {
+    console.log("Received callback:", req.body); // Log the incoming request body 
+  const parsedBody = SubmissionCallback.safeParse(req.body);
+    console.log(parsedBody,"yash test parsedBidy");
+    
+    if (!parsedBody.success) {  
+        console.error("Validation Errors:", parsedBody.error); // Log the specific validation errors  
+        return res.status(403).json({  
+            message: "Invalid input",  
+            errors: parsedBody.error, // This will show you what went wrong  
         });  
     }  
 
-    try {  
-        // Check if the test case already exists  
-        const existingTestCase = await prisma.testCase.findUnique({  
-            where: { judge0TrackingId },  
-        });  
+  const testCase = await prismaClient.testCase.update({
+    where: {
+      judge0TrackingId: parsedBody.data.token,
+    },
+    data: {
+      status: outputMapping[parsedBody.data.status.description],
+      time: Number(parsedBody.data.time),
+      memory: parsedBody.data.memory,
+    },
+  });
 
-        if (existingTestCase) {  
-            console.log("Test case exists, updating...");  
+  if (!testCase) {
+    return res.status(404).json({
+      message: "Testcase not found",
+    });
+  }
 
-            // If it exists, handle it with the PUT logic  
-            const updatedTestCase = await prisma.testCase.update({  
-                where: { judge0TrackingId },  
-                data: {  
-                    status: outputMapping[status], // Map the status if necessary  
-                    time: time || 0,  
-                    memory: memory || 0,  
-                }  
-            });  
+  const allTestcaseData = await prismaClient.testCase.findMany({
+    where: {
+      submissionId: testCase.submissionId,
+    },
+  });
 
-            // Additional logic if needed after updating...  
+  const pendingTestcases = allTestcaseData.filter(
+    (testcase) => testcase.status === "PENDING",
+  );
+  const failedTestcases = allTestcaseData.filter(
+    (testcase) => testcase.status !== "AC",
+  );
 
-            return res.status(200).json(updatedTestCase);  
-        } else {  
-            console.log("Test case does not exist, creating...");  
 
-            // If it does not exist, create a new test case  
-            const newTestCase = await prisma.testCase.create({  
-                data: {  
-                    submissionId,  
-                    status: outputMapping[status], // Map the status if necessary  
-                    time: time || 0,  
-                    memory: memory || 0,  
-                    index: 0, // Initialize index with a default value  
-                    judge0TrackingId, // Include judge0TrackingId  
-                }  
-            });  
+  // This logic is fairly ugly
+  // We should have another async process update the status of the submission.
+  // This can also lead to a race condition where two test case webhooks are sent at the same time
+  // None of them would update the status of the submission
+  if (pendingTestcases.length === 0) {
+    const accepted = failedTestcases.length === 0;
+    const response = await prismaClient.submission.update({
+      where: {
+        id: testCase.submissionId,
+      },
+      data: {
+        status: accepted ? "AC" : "REJECTED",
+        time: Math.max(
+          ...allTestcaseData.map((testcase) => Number(testcase.time || "0")),
+        ),
+        memory: Math.max(
+          ...allTestcaseData.map((testcase) => testcase.memory || 0),
+        ),
+      },
+      include: {
+        problem: true,
+       
+      }
+    });
+      console.log(res,"tests case res");
+      
+  }
+  res.status(200).json({ message: 'Callback received successfully' });  
+});
 
-            return res.status(201).json(newTestCase);  
-        }  
-    } catch (e) {  
-        console.error(e);  
-        return res.status(500).json({  
-            message: "Internal Server Error",  
-        });  
-    }  
-});  
-
-// Start your Express app  
-app.listen(process.env.PORT || 3001, () => {  
-    console.log(`Submission webhook is running on port ${process.env.PORT || 3001}`);  
-});  
+app.listen(PORT, () => {  
+    console.log(`Server listening on http://localhost:${PORT}`);  
+  });  

@@ -87,9 +87,10 @@ function SubmitProblem({
       setStatus(SubmitStatus.SUBMIT)
       return
     }
-
-    const response = await axios.get(`/api/submission?id = ${id}`)
-
+    console.log("yash submission id",id);
+    
+    const response = await axios.get(`/api/submission?id=${id}`)
+    console.log("Response from submission API:", response.data);
     if (response.data.submission.status === "PENDING") {
       setTestCase(response.data.testCase)
 
@@ -109,13 +110,17 @@ function SubmitProblem({
 
   async function Submit() {
     setStatus(SubmitStatus.PENDING)
-      setTestCase((t: any[]) => t.map((tc) => ({ ...tc, status: "PENDING" })));
+    setTestCase((t: any[]) => t.map((tc) => ({ ...tc, status: "PENDING" })));
+    console.log("yash before submit");
+    
       try {
         const res = await axios.post(`/api/submission/`, {
             code: code[language],
             languageId: language,
             problemId: problem.id,
-          })
+        })
+        console.log(res,"yash submit");
+        
           submitPoll(res.data.id, 10) 
       } catch (e) {
           console.error(e);
@@ -124,8 +129,8 @@ function SubmitProblem({
   }
 
   return (
-    <div>
-      <div className="flex items-center space-x-4 mb-4 mt-4">
+    <div className="">
+      <div className="flex items-center space-x-4 mb-4 mt-4 ">
         <Label htmlFor="language" className="text-neutral-300 font-medium">
           Language
         </Label>
