@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Building, Code2 } from "lucide-react"
 import Link from "next/link"
 import { ProblemSearch } from "./Filter"
+import { Button } from "@/components/ui/button"
 
 interface Problem {
   id: string
@@ -77,6 +78,11 @@ export async function Problems({ searchParams }: { searchParams?: { q?: string }
                         <div className="flex items-center gap-2">
                           <Building className="h-4 w-4 text-neutral-400" />
                           {problem.companyName}
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-neutral-300">
+                        <div className="flex items-center">
+                         <Button className="w-20">Solve</Button>
                         </div>
                       </TableCell>
                     </TableRow>

@@ -20,7 +20,11 @@ async function main(problemSlug: string) {
   try {  
     const problemStatement = await promisifedReadFile(  
       `${MOUNT_PATH}/${problemSlug}/problem.md`  
-    );  
+    );
+    
+    const problemDetail = await promisifedReadFile(
+      `${MOUNT_PATH}/${problemSlug}/Detail.md`
+    )
 
     const problem = await prismaClient.problem.upsert({  
       where: {  
@@ -30,7 +34,9 @@ async function main(problemSlug: string) {
         title: problemSlug,  
         slug: problemSlug,  
         description: problemStatement,  
-        companyName: "Default Company", // Add the required companyName property  
+        companyName: problemDetail, // Add the required companyName property 
+        difficulty: problemDetail,
+        
       },  
       update: {  
         description: problemStatement,  

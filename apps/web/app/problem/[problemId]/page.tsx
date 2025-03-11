@@ -22,7 +22,7 @@ export default async function ProblemPage({
       <main className="flex-1 py-8 md:py-12 grid md:grid-cols-2 gap-8 md:gap-4 mt-10 mx-6">
         <div className="rounded-xl border border-neutral-700 bg-neutral-800/50 backdrop-blur-sm overflow-hidden shadow-xl p-6">
           <div className="prose prose-stone dark:prose-invert">
-            <ProblemStatement description={problem.description} />
+            <ProblemStatement problem={problem} />
           </div>
         </div>
         <ProblemSubmitBar problem={problem} />
