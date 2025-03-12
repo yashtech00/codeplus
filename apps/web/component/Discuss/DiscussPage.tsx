@@ -12,7 +12,7 @@ export interface PostProp {
     description: string;  
     upVote: number;  
     downVote: number | null; // Updated to accept null for downVote  
-    comment: string;  
+    commentCount: number;  
     createdAt: Date;  
 }  
 

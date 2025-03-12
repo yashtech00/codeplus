@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { SignupPage } from "../../../component/Auth/SignupPage";
 
 
 function FloatingPaths({ position }: { position: number }) {
@@ -114,17 +115,18 @@ export function BackgroundPaths({
                     >
                         <Button
                             variant="ghost"
-                            className="rounded-[1.15rem] px-8 py-6 text-lg font-semibold backdrop-blur-md 
+                            className="rounded-[1.15rem] px-10 py-8 text-lg font-semibold backdrop-blur-md 
                             bg-white/95 hover:bg-white/100 dark:bg-black/95 dark:hover:bg-black/100 
                             text-black dark:text-white transition-all duration-300 
                             group-hover:-translate-y-0.5 border border-black/10 dark:border-white/10
                             hover:shadow-md dark:hover:shadow-neutral-800/50"
                         >
+                            <SignupPage/>
                             <span className="opacity-90 group-hover:opacity-100 transition-opacity">
-                                Get Started
+                            , explore the possibilities!
                             </span>
                             <span
-                                className="ml-3 opacity-70 group-hover:opacity-100 group-hover:translate-x-1.5 
+                                className="ml-6 opacity-70 group-hover:opacity-100 group-hover:translate-x-1.5 
                                 transition-all duration-300"
                             >
                                 →

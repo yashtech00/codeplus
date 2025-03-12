@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { SignupPage } from "../../../component/Auth/SignupPage";
 import { SigninPage } from "../../../component/Auth/Signinpage";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 import { Toaster } from "sonner";
 import { useRouter } from "next/navigation";
@@ -28,16 +28,13 @@ function NavHeader() {
       router.push("/problems");
     }
   };
-
   return (
     <>
       <ul
         className="relative mx-auto flex w-fit flex-wrap md:flex-nowrap rounded-full border-2 border-gray-400 bg-natural-950 text-white p-1"
         onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
       >
-        <Link href={"/"}>
-          <Tab setPosition={setPosition}>Home</Tab>
-        </Link>
+       
 
         <Tab setPosition={setPosition}>
           <button onClick={handleProblem} className="cursor-pointer">
@@ -48,14 +45,24 @@ function NavHeader() {
         <Link href={"/Discuss"}>
           <Tab setPosition={setPosition}>Discuss</Tab>
         </Link>
-
-        <Tab setPosition={setPosition}>
-          <SigninPage />
-        </Tab>
+        {session?.user.id ? (
+          <Tab setPosition={setPosition}>
+            <button onClick={() => signOut({ callbackUrl: "/" })} >
+           Logout
+       </button>
+          </Tab>
+           
+      ) : (
+        <>
+          <Tab setPosition={setPosition}>
+            <SigninPage />
+          </Tab>
+          <Tab setPosition={setPosition}>
+            <SignupPage />
+          </Tab>
+        </>
+      )}
         
-        <Tab setPosition={setPosition}>
-          <SignupPage />
-        </Tab>
 
         <Cursor position={position} />
       </ul>

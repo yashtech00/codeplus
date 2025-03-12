@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import NavHeader from '@/components/ui/nav-header';
 import { Code2, Star, Menu } from 'lucide-react';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export const AppBar = () => {
@@ -12,10 +13,14 @@ export const AppBar = () => {
     <>
       <div className="flex justify-between items-center w-full bg-neutral-950 px-4 py-4 absolute z-20">
         {/* Logo Section */}
+        <Link href={"/"}>
         <div className="flex items-center space-x-2">
+          
           <Code2 className="h-6 w-6 text-blue-500" />
-          <span className="text-xl font-bold text-white">CodePlus</span>
-        </div>
+            <span className="text-xl font-bold text-white">CodePlus</span>
+            
+          </div>
+          </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:block">
@@ -41,6 +46,7 @@ export const AppBar = () => {
         <button
           className="md:hidden text-white"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          title="Toggle mobile menu"
         >
           <Menu className="h-6 w-6" />
         </button>

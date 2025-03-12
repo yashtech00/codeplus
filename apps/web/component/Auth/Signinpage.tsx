@@ -79,17 +79,13 @@ function SigninPage() {
     return (
         <Dialog>
 
-            {session?.data?.user ? (
-                <button onClick={() => signOut({ callbackUrl: "/" })} >
-                    Logout
-                </button>
-            ) : (
+           
                 <DialogTrigger asChild>
                     <button >
                         Sign In
                     </button>
                 </DialogTrigger>
-            )}
+            
 
 
             <DialogContent>
@@ -110,7 +106,7 @@ function SigninPage() {
                         </svg>
                     </div>
                     <DialogHeader>
-                        <DialogTitle className="sm:text-center">Sign up Origin UI</DialogTitle>
+                        <DialogTitle className="sm:text-center">Sign In CodePlus</DialogTitle>
                         <DialogDescription className="sm:text-center">
                             We just need a few details to get you started.
                         </DialogDescription>

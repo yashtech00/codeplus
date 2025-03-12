@@ -106,7 +106,7 @@ function SignupPage() {
                         </svg>
                     </div>
                     <DialogHeader>
-                        <DialogTitle className="sm:text-center">Sign up Origin UI</DialogTitle>
+                        <DialogTitle className="sm:text-center">Sign up CodePlus</DialogTitle>
                         <DialogDescription className="sm:text-center">
                             We just need a few details to get you started.
                         </DialogDescription>
