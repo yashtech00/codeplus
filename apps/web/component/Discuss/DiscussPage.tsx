@@ -2,9 +2,11 @@
 
 import { Button } from "@/components/ui/button"
 import axios from "axios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { DiscussCard } from "./DiscussCard";
 
-interface PostProp{
+export interface PostProp{
+    id: string;
     title: string;
     description: string;
     upVote: number;
@@ -15,19 +17,24 @@ interface PostProp{
 export async function DiscussPage() {
 
     const [loading, setLoading] = useState(false);
-    const [posts, setPosts] = useState<>([]);
+    const [posts, setPosts] = useState<PostProp[]>([]);
 
-    async function fetch(e) {
-        e.preventDefault();
+    async function fetch(e?: React.MouseEvent<HTMLButtonElement>) {
+        if (e) e.preventDefault();
         try {
             setLoading(true)
             const res = await axios.get(`/api/discuss`, {   
             })
             setPosts([...posts, ...res.data])
+            setLoading(false);
         } catch (e) {
-            
+            console.error(e);
+            setLoading(true);
         }
     }
+    useEffect(() => {
+        fetch();
+    },[])
 
 
 
@@ -42,7 +49,12 @@ export async function DiscussPage() {
             </div>
             </div>
             <div>
-                {}
+                {posts.map((discussPost) => (
+                    <div key={discussPost.id}>
+                    <DiscussCard posts = {discussPost}/>
+
+                    </div>
+                ))}
             </div>
         </div>
     )
