@@ -219,7 +219,24 @@ export async function COMMENT(req: NextRequest) {
             });
         }
 
-        
+        const newComment = await prisma.comment.create({
+            data: {
+                discussId,
+                comment: comment,
+                userId: session.user.id
+            }
+        })
+
+        await prisma.comment.update({
+            where: {
+                id:discussId
+            },
+            data: {
+                comment: {
+                    increment:1,
+                }
+            }
+        })
 
 
 
