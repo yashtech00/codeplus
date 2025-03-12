@@ -45,7 +45,7 @@ function NavHeader() {
           <Tab setPosition={setPosition}>Discuss</Tab>
         </Link>
           
-        <Tab setPosition={setPosition}>Blog</Tab>
+       
         <Tab setPosition={setPosition}>
           <SigninPage />
         </Tab>

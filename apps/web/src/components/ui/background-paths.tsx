@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
+
 function FloatingPaths({ position }: { position: number }) {
     const paths = Array.from({ length: 36 }, (_, i) => ({
         id: i,
@@ -62,8 +63,9 @@ export function BackgroundPaths({
             <div className="absolute inset-0">
                 <FloatingPaths position={1} />
                 <FloatingPaths position={-1} />
+                
             </div>
-
+            
             <div className="relative z-10 container mx-auto px-4 md:px-6 text-center">
                 <motion.div
                     initial={{ opacity: 0 }}
@@ -100,7 +102,9 @@ export function BackgroundPaths({
                             </span>
                         ))}
                     </h1>
-
+                    <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
+            Practice coding challenges, solve real-world problems, and level up your programming skills with our interactive platform.
+          </p>
                     <div
                         className="inline-block group relative bg-gradient-to-b from-black/10 to-white/10 
                         dark:from-white/10 dark:to-black/10 p-px rounded-2xl backdrop-blur-lg 

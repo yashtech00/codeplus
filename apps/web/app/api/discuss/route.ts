@@ -35,7 +35,6 @@ export async function POST(req: NextRequest) {
         description: discussParsed.data.description,
         upVote: discussParsed.data.upVote,
         downVote: discussParsed.data.downVote,
-        comment: discussParsed.data.comment,
         userId: session?.user?.id,
       },
     });
@@ -98,163 +97,101 @@ export async function GET(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
-    const session = await getServerSession(authOptions);
-    if (!session?.user.id) {
-      return NextResponse.json(
-        {
-          message: "You are not logged In",
+  const session = await getServerSession(authOptions);
+  if (!session?.user.id) {
+    return NextResponse.json(
+      {
+        message: "You are not logged In",
+      },
+      {
+        status: 401,
+      }
+    );
+  }
+
+//   const url = new URL(req.url);
+//   const searchParams = new URLSearchParams(url.search);
+    //   const discussId = searchParams.get("id");
+    const { id } = await req.json();
+
+  try {
+    const updatedDiscuss = await prisma.discuss.update({
+      where: {
+        id
+      },
+      data: {
+        upVote: {
+          increment: 1,
         },
-        {
-          status: 401,
-        }
-      );
-    }
-
-    const url = new URL(req.url);
-    const searchParams = new URLSearchParams(url.search);
-    const discussId = searchParams.get("id");
-
-    try {
-        const updatedDiscuss = await prisma.discuss.update({
-            where: {
-                id: discussId ?? ""
-            },
-            data: {
-                upVote: {
-                    increment:1,
-                }
-            }
-        })
-        return NextResponse.json({
-            message: "UpVote successfully",
-            discuss:updatedDiscuss
-        }, {
-            status:200
-        })
-    } catch (e) {
-        console.error(e);
-        return NextResponse.json({
-            message: "Error while upvoting",
-        
-        }, {
-            status:500
-        })
-    }
-    
-
+      },
+    });
+    return NextResponse.json(
+      {
+        message: "UpVote successfully",
+        discuss: updatedDiscuss,
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json(
+      {
+        message: "Error while upvoting",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
 }
 
 export async function DELETE(req: NextRequest) {
-    const session = await getServerSession(authOptions);
-    if (!session?.user.id) {
-      return NextResponse.json(
-        {
-          message: "You are not logged In",
+  const session = await getServerSession(authOptions);
+  if (!session?.user.id) {
+    return NextResponse.json(
+      {
+        message: "You are not logged In",
+      },
+      {
+        status: 401,
+      }
+    );
+  }
+
+  const { id } = await req.json();
+
+  try {
+    const updatedDiscuss = await prisma.discuss.update({
+      where: {
+        id
+      },
+      data: {
+        downVote: {
+          increment: 1,
         },
-        {
-          status: 401,
-        }
-      );
-    }
-
-    const url = new URL(req.url);
-    const searchParams = new URLSearchParams(url.search);
-    const discussId = searchParams.get("id");
-
-    try {
-        const updatedDiscuss = await prisma.discuss.update({
-            where: {
-                id: discussId ?? ""
-            },
-            data: {
-                downVote: {
-                    increment:1,
-                }
-            }
-        })
-        return NextResponse.json({
-            message: "downVote successfully",
-            discuss:updatedDiscuss
-        }, {
-            status:200
-        })
-    } catch (e) {
-        console.error(e);
-        return NextResponse.json({
-            message: "Error while downVoting",
-        
-        }, {
-            status:500
-        })
-    }
-    
-
+      },
+    });
+    return NextResponse.json(
+      {
+        message: "downVote successfully",
+        discuss: updatedDiscuss,
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json(
+      {
+        message: "Error while downVoting",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
 }
 
-export async function COMMENT(req: NextRequest) {
-    const session = await getServerSession(authOptions);
-    if (!session?.user.id) {
-      return NextResponse.json(
-        {
-          message: "You are not logged In",
-        },
-        {
-          status: 401,
-        }
-      );
-    }
-
-    const url = new URL(req.url);
-    const searchParams = new URLSearchParams(url.search);
-    const discussId = searchParams.get("id");
-
-    try {
-        const { discussId, comment } = await req.json();
-
-        if (!comment) {
-            return NextResponse.json({
-                message: "Invalid comment data",
-            }, {
-                status: 400,
-            });
-        }
-
-        const newComment = await prisma.comment.create({
-            data: {
-                discussId,
-                comment: comment,
-                userId: session.user.id
-            }
-        })
-
-        await prisma.comment.update({
-            where: {
-                id:discussId
-            },
-            data: {
-                comment: {
-                    increment:1,
-                }
-            }
-        })
-
-
-
-        return NextResponse.json({
-            message: "UpVote successfully",
-            discuss:updatedDiscuss
-        }, {
-            status:200
-        })
-    } catch (e) {
-        console.error(e);
-        return NextResponse.json({
-            message: "Error while upvoting",
-        
-        }, {
-            status:500
-        })
-    }
-    
-
-}
