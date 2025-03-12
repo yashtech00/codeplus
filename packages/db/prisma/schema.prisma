@@ -22,8 +22,16 @@ model User {
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   submission Submission[]
+  discuss Discuss[]
 }
 
+model Discuss{
+  id String @id @default(uuid())
+  title String
+  description String
+  userId String
+  user User @relation(fields: [userId],references: [id])
+}
 model Problem {
   id          String        @id @default(uuid())
   title       String
