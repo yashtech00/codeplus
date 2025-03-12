@@ -29,6 +29,9 @@ model Discuss{
   id String @id @default(uuid())
   title String
   description String
+  upVote Int? @default(0)
+  downVote Int?
+  comment String? 
   userId String
   user User @relation(fields: [userId],references: [id])
 }

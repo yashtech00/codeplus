@@ -15,7 +15,7 @@ export async function POST(req:NextRequest) {
         })
     }
 
-    const 
+    const discussParsed = 
     const discuss = await prisma.discuss.create({
         data: {
             title:
