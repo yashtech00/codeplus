@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { DiscussCard } from "./DiscussCard";
+import Link from "next/link";
 
 export interface PostProp{
     id: string;
@@ -46,7 +47,7 @@ export async function DiscussPage() {
                 <h1>Discuss coding problems</h1>
             </div>
             <div>
-                <Button>Add +</Button>
+               <Link href={"/publish"}> <Button>Add +</Button></Link>
             </div>
             </div>
             <div>
