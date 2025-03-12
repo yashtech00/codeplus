@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { SignupPage } from "../../../component/Auth/SignupPage";
@@ -22,33 +22,37 @@ function NavHeader() {
 
   const handleProblem = () => {
     if (!session?.user) {
-      toast("you ar not logged in")
+      toast("you are not logged in");
       router.push("/");
     } else {
-      router.push("/problems")
+      router.push("/problems");
     }
-  }
+  };
 
   return (
     <>
       <ul
-        className="relative mx-auto flex w-fit rounded-full border-2 border-gray-400 bg-natural-950 text-white p-1"
+        className="relative mx-auto flex w-fit flex-wrap md:flex-nowrap rounded-full border-2 border-gray-400 bg-natural-950 text-white p-1"
         onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
       >
         <Link href={"/"}>
           <Tab setPosition={setPosition}>Home</Tab>
         </Link>
 
-       
-        <Tab setPosition={setPosition}><button onClick={handleProblem} className=" cursor-pointer">Problems</button></Tab>
+        <Tab setPosition={setPosition}>
+          <button onClick={handleProblem} className="cursor-pointer">
+            Problems
+          </button>
+        </Tab>
+        
         <Link href={"/Discuss"}>
           <Tab setPosition={setPosition}>Discuss</Tab>
         </Link>
-          
-       
+
         <Tab setPosition={setPosition}>
           <SigninPage />
         </Tab>
+        
         <Tab setPosition={setPosition}>
           <SignupPage />
         </Tab>
@@ -81,7 +85,7 @@ const Tab = ({
           left: ref.current.offsetLeft,
         });
       }}
-      className="relative z-10 block cursor-pointer px-3 py-1.5 text-xs text-white mix-blend-difference md:px-5 md:py-3 md:text-base"
+      className="relative z-10 block cursor-pointer px-2 py-1 text-xs text-white mix-blend-difference md:px-5 md:py-3 md:text-base"
     >
       {children}
     </li>

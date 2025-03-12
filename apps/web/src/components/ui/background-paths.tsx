@@ -58,6 +58,7 @@ export function BackgroundPaths({
 }) {
     const words = title.split(" ");
 
+
     return (
         <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-white dark:bg-neutral-950">
             <div className="absolute inset-0">
@@ -102,6 +103,7 @@ export function BackgroundPaths({
                             </span>
                         ))}
                     </h1>
+                   <p className="text-2xl text-gray-300 mb-12 max-w-2xl mx-auto"> Master Your Coding Skills Today</p>
                     <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
             Practice coding challenges, solve real-world problems, and level up your programming skills with our interactive platform.
           </p>
