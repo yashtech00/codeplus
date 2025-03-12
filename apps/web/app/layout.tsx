@@ -19,9 +19,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} >
         <Providers>
-          <AppBar/>
+          <AppBar />
+          
           {children}
           </Providers>
       </body>
