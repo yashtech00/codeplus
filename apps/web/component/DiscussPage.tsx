@@ -1,9 +1,9 @@
 "use client"
 
-export default function Discuss() {
+export async function DiscussPage() {
     return (
         <div>
-            <DiscussPage/>
+
         </div>
     )
 }
