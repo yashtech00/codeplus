@@ -6,5 +6,5 @@ export const discussSchema = z.object({
     description: z.string(),
     upVote: z.number().optional(),
     downVote: z.string().optional(),
-    comment
+    comment:z.string().optional()
 })

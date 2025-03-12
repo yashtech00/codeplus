@@ -18,28 +18,31 @@ model User {
   name       String?
   email      String       @unique
   password   String?
-  provider Provider
+  provider   Provider
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   submission Submission[]
-  discuss Discuss[]
+  discuss    Discuss[]
 }
 
-model Discuss{
-  id String @id @default(uuid())
-  title String
+model Discuss {
+  id          String   @id @default(uuid())
+  title       String
   description String
-  upVote Int? @default(0)
-  downVote Int?
-  comment String? 
-  userId String
-  user User @relation(fields: [userId],references: [id])
+  upVote      Int?     @default(0)
+  downVote    Int?
+  comment     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
 }
+
 model Problem {
   id          String        @id @default(uuid())
   title       String
   description String
-  solved      Int    @default(0)
+  solved      Int           @default(0)
   companyName String
   hidden      Boolean       @default(true)
   slug        String        @unique
@@ -59,7 +62,8 @@ model DefaultCode {
   updatedAt  DateTime @updatedAt
   problem    Problem  @relation(fields: [problemId], references: [id])
   language   Language @relation(fields: [languageId], references: [id])
-  @@unique([problemId,languageId])
+
+  @@unique([problemId, languageId])
 }
 
 model Submission {
@@ -81,7 +85,7 @@ model Submission {
 }
 
 model TestCase {
-  id               String  @id @default(uuid())
+  id               String         @id @default(uuid())
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
   status           TestCaseResult @default(PENDING)
@@ -94,7 +98,7 @@ model TestCase {
 }
 
 model Language {
-  id          Int        @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   name        String
   judge0Id    Int           @unique
   createdAt   DateTime      @default(now())
@@ -123,7 +127,7 @@ enum TestCaseResult {
   PENDING
 }
 
-enum Provider{
+enum Provider {
   Github
   Credentials
 }
