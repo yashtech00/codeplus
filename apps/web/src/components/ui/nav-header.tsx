@@ -20,15 +20,6 @@ function NavHeader() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (status === "unauthenticated") {
-  //     toast("You are not logged in");
-  //     router.push("/");
-  //   }
-  // }, [status, router]); // Ensure this only runs when status changes
-
-  // if (status === "loading") return null; // Prevents premature rendering
-
   const handleProblem = () => {
     if (!session?.user) {
       toast("you ar not logged in")
@@ -49,7 +40,10 @@ function NavHeader() {
         </Link>
 
        
-            <Tab setPosition={setPosition}><button  onClick={handleProblem} className=" cursor-pointer">Problems</button></Tab>
+        <Tab setPosition={setPosition}><button onClick={handleProblem} className=" cursor-pointer">Problems</button></Tab>
+        <Link href={"/Discuss"}>
+          <Tab setPosition={setPosition}>Discuss</Tab>
+        </Link>
           
         <Tab setPosition={setPosition}>Blog</Tab>
         <Tab setPosition={setPosition}>
