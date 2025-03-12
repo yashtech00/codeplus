@@ -11,7 +11,8 @@ export interface PostProp{
     description: string;
     upVote: number;
     downVote: number;
-    comment:string
+    comment: string;
+    createdAt: Date
 }
 
 export async function DiscussPage() {
