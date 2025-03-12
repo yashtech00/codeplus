@@ -50,7 +50,7 @@ export function DiscussPage() {
 
     return (  
         <div className=" flex justify-center ">  
-            <div className="mb-4">  
+            <div className="">  
                 {loading ? (   
                     <p>Loading...</p>   
                 ) : (  

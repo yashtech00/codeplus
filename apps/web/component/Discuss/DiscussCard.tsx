@@ -3,12 +3,14 @@
 import { useSession } from "next-auth/react"
 import type { PostProp } from "./DiscussPage"
 import { ArrowDown, ArrowUp, MessageSquare, User } from "lucide-react"
+import Link from "next/link"
 
 export function DiscussCard({ posts }: { posts: PostProp }) {
   const session = useSession()
 
-  return (
-    <div className="bg-neutral-800 rounded-2xl w-full max-w-[700px] p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-neutral-700">
+    return (
+        <Link href={`/Discuss?id=${posts.id}`}>
+    <div className="bg-neutral-800 rounded-2xl w-full max-w-[700px] p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-neutral-700 my-6">
       {/* User info section */}
       <div className="flex items-center gap-3 mb-4">
         <div className="relative h-10 w-10 rounded-full overflow-hidden bg-neutral-700 flex items-center justify-center">
@@ -52,7 +54,8 @@ export function DiscussCard({ posts }: { posts: PostProp }) {
           </button>
         </div>
       </div>
-    </div>
+            </div>
+            </Link>
   )
 }
 
