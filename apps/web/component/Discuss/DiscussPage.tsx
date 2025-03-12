@@ -42,14 +42,7 @@ export async function DiscussPage() {
 
     return (
         <div>
-            <div>
-            <div>
-                <h1>Discuss coding problems</h1>
-            </div>
-            <div>
-               <Link href={"/publish"}> <Button>Add +</Button></Link>
-            </div>
-            </div>
+           
             <div>
                 {posts.map((discussPost) => (
                     <div key={discussPost.id}>
