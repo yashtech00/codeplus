@@ -32,11 +32,22 @@ export function DiscussCard({ posts }: { posts: PostProp }) {
             console.error("Error downvoting:", error);  
         }  
     };  
+    
+    // const handleCommentSubmit = async (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     try {
+    //         await axios.post('api/discuss/comment', { discussId: allComment.id, comment: commentText });
+
+    //         setCommentText(""); // Clear the input field after submission  
+    //     } catch (error) {
+    //         console.error("Error submitting comment:", error);
+    //     }
+    // };
 
     // Handle comment submission  
     
     return ( 
-        <Link href={`/comment?id=${posts.id}`}>
+        
         <div className="bg-neutral-800 rounded-2xl w-full max-w-lg p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-neutral-700 my-6">  
             {/* User info section */}  
             <div className="flex items-center gap-3 mb-4">  
@@ -81,6 +92,6 @@ export function DiscussCard({ posts }: { posts: PostProp }) {
 
               
             </div>
-            </Link>    
+               
     );  
 }  

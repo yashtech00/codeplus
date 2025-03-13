@@ -25,6 +25,8 @@ async function main(problemSlug: string) {
     const problemDetail = await promisifedReadFile(
       `${MOUNT_PATH}/${problemSlug}/Detail.md`
     )
+    console.log(problemDetail,"yash problemdetail");
+    
 
     const problem = await prismaClient.problem.upsert({  
       where: {  
@@ -37,10 +39,12 @@ async function main(problemSlug: string) {
         companyName: problemDetail, // Add the required companyName property  
       },  
       update: {  
-        description: problemStatement,  
+        description: problemStatement,
+        companyName:problemDetail
       },  
     });  
-
+    console.log(problem,"yash update problem");
+    
     // Handle all language boilerplate code reading and upserting  
     await Promise.all(  
       Object.keys(LANGUAGE_MAPPING).map(async (language) => {  

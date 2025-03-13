@@ -1,1 +1,1 @@
-Company Name: Amazon, Flipcart, Zomato, Google 
+ Amazon, Flipcart, Zomato, Google

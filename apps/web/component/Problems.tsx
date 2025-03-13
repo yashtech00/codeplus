@@ -60,13 +60,14 @@ export async function Problems({ searchParams }: { searchParams?: { q?: string }
                       key={problem.id}  
                       className="border-neutral-700 transition-colors hover:bg-neutral-700/30 cursor-pointer"  
                     >  
+                      
                       <TableCell className="p-0">  
-                        <Link href={`/problem/${problem.id}`} className="flex w-full h-full">  
+                        
                           <div className="flex items-center gap-2 py-4 px-4 w-full">  
                             <Code2 className="h-4 w-4 text-neutral-400 flex-shrink-0" />  
                             <span className="font-medium text-white">{problem.title}</span>  
                           </div>  
-                        </Link>  
+                        
                       </TableCell>  
                       <TableCell>  
                         <DifficultyBadge difficulty={problem.difficulty} />  
@@ -77,11 +78,14 @@ export async function Problems({ searchParams }: { searchParams?: { q?: string }
                           {problem.companyName}  
                         </div>  
                       </TableCell>  
-                      <TableCell className="text-neutral-300 text-center">  
-                        <div className="flex items-center justify-center">  
+                      <TableCell className="text-neutral-300 text-center"> 
+                      <Link href={`/problem/${problem.id}`} className="flex w-full h-full">  
+                        <div className="flex items-center justify-center cursor-pointer">  
                           <Button className="w-20">Solve</Button>  
-                        </div>  
-                      </TableCell>  
+                          </div>  
+                          </Link> 
+                        </TableCell> 
+                           
                     </TableRow>  
                   ))  
                 )}  
