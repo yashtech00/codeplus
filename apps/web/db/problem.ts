@@ -1,18 +1,6 @@
 import prisma from ".";
 
-export const getProblem = async (problemId: string, contestId?: string) => {
-  if (contestId) {
-
-    const problem = await prisma.problem.findFirst({
-      where: {
-        id: problemId,
-      },
-      include: {
-        defaultCode: true,
-      },
-    });
-    return problem;
-  }
+export const getProblem = async (problemId: string) => {
 
   const problem = await prisma.problem.findFirst({
     where: {

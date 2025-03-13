@@ -36,7 +36,7 @@ export function DiscussCard({ posts }: { posts: PostProp }) {
     // Handle comment submission  
     
     return ( 
-        <Link href={`/Discuss/${posts.id}`}>
+        <Link href={`/Discuss/comment?id=${posts.id}`}>
         <div className="bg-neutral-800 rounded-2xl w-full max-w-lg p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-neutral-700 my-6">  
             {/* User info section */}  
             <div className="flex items-center gap-3 mb-4">  

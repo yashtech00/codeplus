@@ -54,6 +54,11 @@ export function FullDiscussCard() {
 
     return (
         <div>
+            {/* full discuss card */}
+            <div>
+
+            </div>
+            
             {/* Comment Submission Form */}  
             <form onSubmit={handleCommentSubmit} className="flex mb-4">  
                 <input  
