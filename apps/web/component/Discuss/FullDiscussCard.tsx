@@ -1,26 +1,46 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDiscussHook } from "../../app/hooks/useDiscussHook";
+import { useSession } from "next-auth/react";
 
+interface CommentProp{
+    id:string,
+    comment: string,
+    createdAt : Date 
+}
+export interface PostProp {  
+    id: string;  
+    title: string;  
+    description: string;  
+    upVote: number;  
+    downVote: number | null; // Updated to accept null for downVote  
+    commentCount: number;  
+    createdAt: Date;  
+}
 
 export function FullDiscussCard() {
-    const { posts } = useDiscussHook();
+    const { loading, posts } = useDiscussHook();
     const [commentText, setCommentText] = useState("");  
-    const [commentCount, setCommentCount] = useState(posts.commentCount || 0);  
-   
+    const [allComment,setAllComment] = useState<CommentProp[]>([])
+    const session = useSession();
     async function fetchComments() {
         try {
-            const res = await axios.get("/api/discuss/comment", {
-                id:posts.id
-            })
+            const res = await axios.get("/api/discuss/comment",
+                {
+                    data:
+                    {
+                        id: posts.id
+                    }
+                })
+            setAllComment(res.data);
         } catch (e) {
             console.error(e);
-            
         }
     }
 
-
-
+    useEffect(() => {
+        fetchComments()
+    },[])
     const handleCommentSubmit = async (e: React.FormEvent) => {  
         e.preventDefault();  
         try {  
@@ -54,11 +74,11 @@ export function FullDiscussCard() {
 
             {/* Display Comments */}  
             <div className="comments-section">
-                {/* @ts-ignore */}
-                {Array.isArray(posts.comment) && posts.comment.map((comment) => (  
+              
+                {Array.isArray(allComment) && allComment.map((comment, index) => (  
                     <div key={comment.id} className="bg-neutral-700 p-2 rounded mb-1">  
                         <p className="text-sm">{comment.comment}</p>  
-                        <p className="text-xs text-neutral-400">Posted by {comment.user.name} on {new Date(comment.createdAt).toLocaleDateString()}</p>  
+                        <p className="text-xs text-neutral-400">Posted by {session?.data?.user.name} on {new Date(comment.createdAt).toLocaleDateString()}</p>  
                     </div>  
                 ))}  
             </div>
