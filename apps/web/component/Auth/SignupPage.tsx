@@ -23,34 +23,34 @@ function SignupPage() {
     const [error, setError] = useState("");
     const session = useSession()
 
-    const SigninProvider = (provider: "github"|"credentials") => {
+    const SigninProvider = (provider: "github" | "credentials") => {
         try {
             if (provider === "credentials") {
                 const res = signIn(provider, {
                     email,
                     password,
                     redirect: false,
-                    callbackUrl:"/",
+                    callbackUrl: "/",
                 })
                 res.then((res) => {
                     if (res?.error) {
                         setError(res.error);
                         toast.error("Invalid Credentials")
-                    }else {
+                    } else {
                         toast.success("Successfully Signed Up")
                     }
                     setLoading(false);
                 })
-            }else if (provider === "github") {
+            } else if (provider === "github") {
                 const res = signIn(provider, {
                     redirect: false,
-                    callbackUrl:"/"
+                    callbackUrl: "/"
                 })
                 res.then((res) => {
                     if (res?.error) {
                         setError(res.error);
                         toast.error("Invalid Github")
-                    }else {
+                    } else {
                         toast.success("Successfully Signed Up")
                     }
                     setLoading(false);
@@ -67,9 +67,9 @@ function SignupPage() {
         e.preventDefault();
         setError("");
         SigninProvider("credentials")
-        
+
     }
-    const handleGithub = (provider:"github") => {
+    const handleGithub = (provider: "github") => {
         setError("");
         SigninProvider(provider);
         setLoading(true);
@@ -80,13 +80,13 @@ function SignupPage() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-               {session?.data?.user ? (
-                                   ""
-                               ) : ( 
-                               <button  >
-                               Sign up
-                           </button>)}
-                              
+                {session?.data?.user ? (
+                    ""
+                ) : (
+                    <button  >
+                        Sign up
+                    </button>)}
+
             </DialogTrigger>
             <DialogContent>
                 <div className="flex flex-col items-center gap-2">
@@ -153,7 +153,7 @@ function SignupPage() {
                     <span className="text-xs text-muted-foreground">Or</span>
                 </div>
 
-                <Button variant="outline" onClick={()=>handleGithub("github")}>Continue with Github</Button>
+                <Button variant="outline" onClick={() => handleGithub("github")}>Continue with Github</Button>
 
                 <p className="text-center text-xs text-muted-foreground">
                     By signing up you agree to our{" "}
@@ -163,10 +163,10 @@ function SignupPage() {
                     .
                 </p>
             </DialogContent>
-        
-        <Toaster/>
+
+            <Toaster />
         </Dialog>
-        
+
     );
 }
 

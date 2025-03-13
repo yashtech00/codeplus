@@ -78,16 +78,11 @@ function SigninPage() {
     const id = useId();
     return (
         <Dialog>
-
-           
-                <DialogTrigger asChild>
-                    <button >
-                        Sign In
-                    </button>
-                </DialogTrigger>
-            
-
-
+            <DialogTrigger asChild>
+                <button >
+                    Sign In
+                </button>
+            </DialogTrigger>
             <DialogContent>
                 <div className="flex flex-col items-center gap-2">
                     <div

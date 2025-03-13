@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDiscussHook } from "../../app/hooks/useDiscussHook";
 import { useSession } from "next-auth/react";
+import { User } from "lucide-react";
 
 interface CommentProp{
     id:string,
@@ -18,18 +19,18 @@ export interface PostProp {
     createdAt: Date;  
 }
 
-export function FullDiscussCard() {
-    const { loading, posts } = useDiscussHook();
+export function FullDiscussCard({comment}:{comment:PostProp}) {
     const [commentText, setCommentText] = useState("");  
     const [allComment,setAllComment] = useState<CommentProp[]>([])
     const session = useSession();
+    const { loading, posts } = useDiscussHook();
     async function fetchComments() {
         try {
-            const res = await axios.get(`/api/discuss/comment?id=${posts.id}`,
+            const res = await axios.get(`/api/discuss/comment?id=${comment.id}`,
                 {
                     data:
                     {
-                        id: posts.id
+                        id: comment.id
                     }
                 })
             setAllComment(res.data);
@@ -44,7 +45,7 @@ export function FullDiscussCard() {
     const handleCommentSubmit = async (e: React.FormEvent) => {  
         e.preventDefault();  
         try {  
-            await axios.post('api/discuss/comment', { discussId: posts.id, comment: commentText });  
+            await axios.post('api/discuss/comment', { discussId: comment.id, comment: commentText });  
             
             setCommentText(""); // Clear the input field after submission  
         } catch (error) {  
@@ -55,9 +56,30 @@ export function FullDiscussCard() {
     return (
         <div>
             {/* full discuss card */}
-            <div>
 
-            </div>
+           <div className="flex items-center gap-3 mb-4">  
+                           <div className="relative h-10 w-10 rounded-full overflow-hidden bg-neutral-700 flex items-center justify-center">  
+                               {session.data?.user.image ? (  
+                                   <img  
+                                       src={session.data.user.image || "/placeholder.svg"}  
+                                       alt={session.data?.user.name || "User"}  
+                                       className="h-full w-full object-cover"  
+                                   />  
+                               ) : (  
+                                   <User className="h-6 w-6 text-neutral-400" />  
+                               )}  
+                           </div>  
+                           <div className="text-neutral-200 font-medium">  
+                               {session.data?.user ? session.data.user.name : "Anonymous"}  
+                               <p className="text-sm text-neutral-400">Posted on {new Date(comment.createdAt).toLocaleDateString()}</p>  
+                           </div>  
+                       </div>  
+           
+                       {/* Discussion Title and Description */}  
+                       <div className="mb-6">  
+                           <h2 className="text-xl font-bold text-white mb-2">{comment.title}</h2>  
+                           <p className="text-neutral-300 leading-relaxed">{comment.description}</p>  
+                       </div>  
             
             {/* Comment Submission Form */}  
             <form onSubmit={handleCommentSubmit} className="flex mb-4">  
