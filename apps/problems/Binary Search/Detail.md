@@ -1,0 +1,1 @@
+Infosys Oracle Wipro Linkedin Qualcomm 
