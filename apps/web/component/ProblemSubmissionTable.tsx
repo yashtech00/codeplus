@@ -18,8 +18,8 @@ export interface ISubmission {
   fullCode: string;  
   status: string;  
   testcases: {  
-    status: string;  
-    index: number;  
+    status: string | null;  
+    index: number | null;  
   }[];  
 }  
 
@@ -63,6 +63,9 @@ export function SubmissionTable({
 }: {  
   submissions: ISubmission[];  
 }) {  
+  
+  console.log(submissions, "yash submissions");  
+  
   return (  
     <div className="overflow-x-auto">  
       <Table className="min-w-full">  
@@ -77,18 +80,18 @@ export function SubmissionTable({
         </TableHeader>  
         <TableBody>  
           {submissions.map((submission) => (  
-            <TableRow key={submission.id}>  
-              <TableCell className="truncate">{submission.id.substr(0, 8)}</TableCell>  
+            <TableRow key={submission.id} className="text-white">  
+              <TableCell className="truncate ">{submission.id.substr(0, 8)}</TableCell>  
               <TableCell className={getColor(submission.status)}>  
                 {getIcon(submission.status)}  
               </TableCell>  
-              <TableCell>  
+              <TableCell >  
                 {  
-                  submission.testcases.filter(  
+                  (submission.testcases || []).filter(  // Fallback to an empty array  
                     (testcase) => testcase.status === "AC",  
                   ).length  
                 }  
-                /{submission.testcases.length}  
+                {(submission.testcases || []).length}  
               </TableCell>  
               <TableCell>{submission.time}</TableCell>  
               <TableCell>{submission.memory}</TableCell>  

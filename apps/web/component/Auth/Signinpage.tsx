@@ -30,7 +30,7 @@ function SigninPage() {
                     email,
                     password,
                     redirect: false,
-                    callbackUrl: "/",
+                    callbackUrl: "/problems",
                 })
                 res.then((res) => {
                     if (res?.error) {
@@ -44,7 +44,7 @@ function SigninPage() {
             } else if (provider === "github") {
                 const res = signIn(provider, {
                     redirect: false,
-                    callbackUrl: "/"
+                    callbackUrl: "/problems"
                 })
                 res.then((res) => {
                     if (res?.error) {
@@ -79,7 +79,7 @@ function SigninPage() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <button >
+                <button>
                     Sign In
                 </button>
             </DialogTrigger>

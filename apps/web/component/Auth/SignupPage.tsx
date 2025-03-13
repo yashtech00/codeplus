@@ -30,7 +30,7 @@ function SignupPage() {
                     email,
                     password,
                     redirect: false,
-                    callbackUrl: "/",
+                    callbackUrl: "/problems",
                 })
                 res.then((res) => {
                     if (res?.error) {
@@ -44,7 +44,7 @@ function SignupPage() {
             } else if (provider === "github") {
                 const res = signIn(provider, {
                     redirect: false,
-                    callbackUrl: "/"
+                    callbackUrl: "/problems"
                 })
                 res.then((res) => {
                     if (res?.error) {
@@ -75,17 +75,23 @@ function SignupPage() {
         setLoading(true);
 
     }
+    if (session.status === "loading") {
+        return null; // Prevent rendering mismatched content
+    }
+
 
     const id = useId();
     return (
         <Dialog>
             <DialogTrigger asChild>
-                {session?.data?.user ? (
-                    ""
-                ) : (
-                    <button  >
-                        Sign up
-                    </button>)}
+                <DialogTrigger asChild>
+                    {/* @ts-ignore     */}
+                    {session?.data?.user ? null : (
+                        <button>
+                            Sign up
+                        </button>
+                    )}
+                </DialogTrigger>
 
             </DialogTrigger>
             <DialogContent>

@@ -72,11 +72,16 @@ function Submissions({ problem }: { problem: IProblem }) {
   const [submissions, setSubmissions] = useState<ISubmission[]>([]);  
 
   useEffect(() => {  
+    console.log("yash submission before");
+    
     const fetchData = async () => {  
       const response = await axios.get(`/api/submission/bulk?problemId=${problem.id}`);  
-      setSubmissions(response.data.submissions || []);  
+      setSubmissions(response.data.Submission || []); 
+      console.log("yash submission " , response.data.Submission);
+      
     };  
-    fetchData();  
+    fetchData(); 
+    
   }, [problem.id]);  
 
   return (  
@@ -136,12 +141,15 @@ function SubmitProblem({
   async function submit() {  
     setStatus(SubmitStatus.PENDING);  
     setTestcases((t) => t.map((tc) => ({ ...tc, status: "PENDING" })));  
-
+    console.log("before submit button");
+    
     const response = await axios.post(`/api/submission/`, {  
       code: code[language],  
       languageId: language,  
       problemId: problem.id,  
-    });  
+    }); 
+    console.log("after submit button ", response);
+    
 
     pollWithBackoff(response.data.id, 10);  
   }  

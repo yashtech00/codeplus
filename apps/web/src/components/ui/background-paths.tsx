@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { SignupPage } from "../../../component/Auth/SignupPage";
 
 
+
 function FloatingPaths({ position }: { position: number }) {
     const paths = Array.from({ length: 36 }, (_, i) => ({
         id: i,
@@ -58,7 +59,7 @@ export function BackgroundPaths({
     title?: string;
 }) {
     const words = title.split(" ");
-
+    
 
     return (
         <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-white dark:bg-neutral-950">
@@ -114,6 +115,7 @@ export function BackgroundPaths({
                         overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
                     >
                         <Button
+                            
                             variant="ghost"
                             className="rounded-[1.15rem] px-10 py-8 text-lg font-semibold backdrop-blur-md 
                             bg-white/95 hover:bg-white/100 dark:bg-black/95 dark:hover:bg-black/100 
@@ -121,9 +123,9 @@ export function BackgroundPaths({
                             group-hover:-translate-y-0.5 border border-black/10 dark:border-white/10
                             hover:shadow-md dark:hover:shadow-neutral-800/50"
                         >
-                            <SignupPage/>
+                           
                             <span className="opacity-90 group-hover:opacity-100 transition-opacity">
-                            , explore the possibilities!
+                            <SignupPage/>
                             </span>
                             <span
                                 className="ml-6 opacity-70 group-hover:opacity-100 group-hover:translate-x-1.5 

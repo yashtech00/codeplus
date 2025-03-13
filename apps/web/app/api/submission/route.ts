@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
       source_code: problem.fullBoilerPlate,  
       stdin: input,  
       expected_output: problem.outputs[index],  
-      callback_url: "https://d9f7-49-36-27-251.ngrok-free.app/submission-callback",  
+      callback_url: "https://internally-mutual-foxhound.ngrok-free.app/submission-callback",  
     }));  
 
     console.log("Submissions payload:", JSON.stringify(submissionsPayload, null, 2));  
@@ -116,7 +116,8 @@ export async function POST(req: NextRequest) {
       message: "Submission Successful",  
       id: submission.id,  
     });  
-  } catch (e) {  
+  } catch (e) { 
+    //@ts-ignore
     console.error("Error during Judge0 request:", e.response?.data || e.message || e);  
     return NextResponse.json({  
       message: "Internal server error during submissions",  
