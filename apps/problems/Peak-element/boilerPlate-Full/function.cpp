@@ -7,7 +7,7 @@
   
   int main() {
     std::cin >> arr;
-    boolean result = peekElement(arr);
+    bool result = peekElement(arr);
     std::cout << result << std::endl;
     return 0;
   }

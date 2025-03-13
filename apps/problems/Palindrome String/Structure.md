@@ -3,4 +3,4 @@ Function Name: isPalindrome
 Input Structure:
 Input Field: string s   
 Output Structure:
-Output Field: boolean result
+Output Field: bool result

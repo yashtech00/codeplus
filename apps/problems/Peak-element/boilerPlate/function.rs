@@ -1,4 +1,4 @@
-fn peekElement(arr: i32) -> unknown {
+fn peekElement(arr: i32) -> bool {
     // Implementation goes here
     result
 }
