@@ -10,7 +10,7 @@ export function ProblemStatement({ problem }: { problem: problemProp }) {
 
   return (
     <div className="flex justify-between">
-    <div className="markdown prose lg:prose-xl text-white ">
+    <div className="markdown prose lg:prose-xl text-white overflow-x-hidden ">
         <Markdown remarkPlugins={[remarkGfm]}>{problem.description}</Markdown>
         
       </div>
