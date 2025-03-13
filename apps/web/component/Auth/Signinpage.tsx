@@ -22,6 +22,7 @@ function SigninPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const session = useSession();
+    const id = useId();
 
     const SigninProvider = (provider: "github" | "credentials") => {
         try {
@@ -75,7 +76,7 @@ function SigninPage() {
         setLoading(true);
 
     }
-    const id = useId();
+    
     return (
         <Dialog>
             <DialogTrigger asChild>
