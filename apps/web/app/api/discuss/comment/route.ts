@@ -75,3 +75,46 @@ export async function POST(req: NextRequest) {
   }
 }
 
+export async function GET(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user.id) {
+    return NextResponse.json(
+      {
+        message: "You are not logged In",
+      },
+      {
+        status: 401,
+      }
+    );
+  }
+
+    //   const { id } = await req.json();
+    const url = new URL(req.url);
+    const searchParams = new URLSearchParams(url.search);
+    const id = searchParams.get("id");
+  try {
+    const comments = await prisma.comment.findMany({
+      where: {
+        discussId: id || undefined,
+      },
+    });
+    return NextResponse.json(
+      {
+        message: "comments fetch successfully",
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json(
+      {
+        message: "Error while fetching",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}

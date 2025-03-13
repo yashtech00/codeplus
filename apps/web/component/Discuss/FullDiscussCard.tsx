@@ -25,7 +25,7 @@ export function FullDiscussCard() {
     const session = useSession();
     async function fetchComments() {
         try {
-            const res = await axios.get("/api/discuss/comment",
+            const res = await axios.get(`/api/discuss/comment?id=${posts.id}`,
                 {
                     data:
                     {
