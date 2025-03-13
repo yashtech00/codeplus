@@ -1,6 +1,6 @@
-Problem Name: "Prime Number"
-Function Name: isPrime
+Problem Name: "Shortest path from 1 to n"
+Function Name: minimumStep
 Input Structure:
 Input Field: int n
 Output Structure:
-Output Field: boolean result
+Output Field: int result

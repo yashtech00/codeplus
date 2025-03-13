@@ -1,1 +1,1 @@
-VMWare Amazon SAPLabs Adobe Google
+Morgan Stanley Accolite Samsung Synopsys Cisco
