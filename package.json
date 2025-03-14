@@ -22,7 +22,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "@prisma/client": "^6.4.1",
+    "@prisma/client": "^5.22.0",
     "@prisma/nextjs-monorepo-workaround-plugin": "^6.5.0",
     "zod": "^3.24.2"
   }
