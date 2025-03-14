@@ -13,15 +13,14 @@
     "./textarea": "./src/@/components/ui/textarea.tsx",
     "./tabs": "./src/@/components/ui/tabs.tsx"
   },
-  "scripts": {  
-  "dev": "next dev --port 3000 --turbopack",  
-  "build": "npm run prisma:generate && next build",  
-  "start": "next start",  
-  "lint": "next lint --max-warnings 0",  
-  "check-types": "tsc --noEmit",  
-  "postinstall": "cd ../../packages/db && prisma generate",  
-  "prisma:generate": "cd ../../packages/db && prisma generate" 
-},
+  "scripts": {
+    "dev": "next dev --port 3000 --turbopack",
+    "build": "prisma generate --schema=../../packages/db/prisma/schema.prisma  && next build  ",
+    "start": "next start",
+    "lint": "next lint --max-warnings 0",
+    "check-types": "tsc --noEmit",
+    "postinstall": "cd ../../packages/db && prisma generate"
+  },
   "dependencies": {
     "-": "^0.0.1",
     "@monaco-editor/react": "^4.7.0",
