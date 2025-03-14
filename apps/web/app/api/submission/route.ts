@@ -8,7 +8,7 @@ import { getProblem } from "../../../lib/problem";
 import { LANGUAGE_MAPPING } from "../../../../../packages/common/language";  
 
 const JUDGE0_URI = process.env.JUDGE0_URI;  
-
+const JUDGE0_CALLBACK = process.env.JUDGE0_CALLBACK
 export async function POST(req: NextRequest) {  
   const session = await getServerSession(authOptions);  
   if (!session?.user) {  
@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
       source_code: problem.fullBoilerPlate,  
       stdin: input,  
       expected_output: problem.outputs[index],  
-      callback_url: "https://internally-mutual-foxhound.ngrok-free.app/submission-callback",  
+      callback_url: `${JUDGE0_CALLBACK}/submission-callback`,  
     }));  
 
     console.log("Submissions payload:", JSON.stringify(submissionsPayload, null, 2));  
