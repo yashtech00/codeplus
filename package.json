@@ -6,8 +6,7 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "check-types": "turbo run check-types",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-      "postinstall": "prisma generate"
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "prettier": "^3.5.3",
@@ -24,6 +23,7 @@
   ],
   "dependencies": {
     "@prisma/client": "^6.4.1",
+    "@prisma/nextjs-monorepo-workaround-plugin": "^6.5.0",
     "zod": "^3.24.2"
   }
 }

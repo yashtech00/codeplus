@@ -5,9 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "ts-node prisma/seed.ts",
-    "db:question": "ts-node prisma/updateQuestion.ts",
-      "postinstall": "prisma generate"
-    
+    "db:question": "ts-node prisma/updateQuestion.ts"
   },
   "exports": {
     "./client": "./src/index.ts"
@@ -19,7 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "5.12.0",
+    "@prisma/client": "^5.22.0",
     "prisma": "^5.12.0"
   }
 }

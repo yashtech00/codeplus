@@ -1,8 +1,9 @@
-import { prismaClient } from "../src";
+
 import { LANGUAGE_MAPPING } from "../../common/language/index";
+import prisma from "../src";
 
 (async () =>
-  await prismaClient.language.createMany({
+  await prisma.language.createMany({
     data: Object.keys(LANGUAGE_MAPPING).map((language) => ({
       id: Number(LANGUAGE_MAPPING[language].internal),
       name: language,

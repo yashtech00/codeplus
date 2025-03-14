@@ -1,6 +1,7 @@
 import fs from "fs";  
-import { prismaClient } from "../src";  
+
 import { LANGUAGE_MAPPING } from "../../common/language";  
+import prisma from "../src";
 
 const MOUNT_PATH = process.env.MOUNT_FILE || "../../apps/problems";  
 
@@ -28,7 +29,7 @@ async function main(problemSlug: string) {
     console.log(problemDetail,"yash problemdetail");
     
 
-    const problem = await prismaClient.problem.upsert({  
+    const problem = await prisma.problem.upsert({  
       where: {  
         slug: problemSlug,  
       },  
@@ -56,7 +57,7 @@ async function main(problemSlug: string) {
           const languageId = LANGUAGE_MAPPING[language].internal; // Obtain the internal ID  
 
           // Check if the languageId exists in the database  
-          const languageExists = await prismaClient.language.findUnique({  
+          const languageExists = await prisma.language.findUnique({  
             where: { id: languageId },  
           });  
     
@@ -67,7 +68,7 @@ async function main(problemSlug: string) {
           }  
     
 
-          await prismaClient.defaultCode.upsert({  
+          await prisma.defaultCode.upsert({  
             where: {  
               problemId_languageId: {  
                 problemId: problem.id,  
