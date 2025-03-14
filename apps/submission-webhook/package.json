@@ -14,10 +14,10 @@
   "dependencies": {
     "@repo/db": "*",
     "@types/cors": "^2.8.17",
-    "bullmq": "^5.41.9",
+   
     "cors": "^2.8.5",
     "express": "^4.21.2",
-    "ioredis": "^5.6.0",
+  
     "nodemon": "^3.1.9"
   },
   "devDependencies": {
