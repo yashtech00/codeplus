@@ -18,8 +18,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --max-warnings 0",
-    "check-types": "tsc --noEmit",
-    "vercel-build": "npx prisma generate && next build"
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "-": "^0.0.1",
