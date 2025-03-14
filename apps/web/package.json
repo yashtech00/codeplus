@@ -15,11 +15,11 @@
   },
   "scripts": {
     "dev": "next dev --port 3000 --turbopack",
-    "build": "next build",
+    "build": "next build  ",
     "start": "next start",
     "lint": "next lint --max-warnings 0",
-    "check-types": "tsc --noEmit"
-   
+    "check-types": "tsc --noEmit",
+    "postinstall": "cd ../../packages/db && prisma generate"
   },
   "dependencies": {
     "-": "^0.0.1",

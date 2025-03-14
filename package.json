@@ -2,12 +2,12 @@
   "name": "with-tailwind",
   "private": true,
   "scripts": {
-    "build": "prisma generate --schema=./packages/db/prisma/schema.prisma && turbo run build",
+    "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "check-types": "turbo run check-types",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "postinstall": "npm install @prisma/client && prisma generate --schema=./packages/db/prisma/schema.prisma"
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    
   },
   "devDependencies": {
     "prettier": "^3.5.3",
