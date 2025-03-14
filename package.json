@@ -7,7 +7,7 @@
     "lint": "turbo run lint",
     "check-types": "turbo run check-types",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "vercel-build": "npx prisma generate && next build"
+      "postinstall": "prisma generate"
   },
   "devDependencies": {
     "prettier": "^3.5.3",

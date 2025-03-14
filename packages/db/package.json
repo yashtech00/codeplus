@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "ts-node prisma/seed.ts",
-    "db:question": "ts-node prisma/updateQuestion.ts"
+    "db:question": "ts-node prisma/updateQuestion.ts",
+      "postinstall": "prisma generate"
     
   },
   "exports": {
