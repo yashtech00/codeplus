@@ -19,9 +19,8 @@
     "start": "next start",
     "lint": "next lint --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "postinstall": "prisma generate --schema=../../packages/db/prisma/schema.prisma",
-    "w:deploy": "turbo run w:deploy",
-    "w:deploy:prod": "turbo run w:deploy:prod"
+    "postinstall": "prisma generate --schema=../../packages/db/prisma/schema.prisma"
+    
   },
   "dependencies": {
     "-": "^0.0.1",

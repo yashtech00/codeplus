@@ -5,16 +5,7 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
-      "command": "npm run build"
-    },
-    "w:deploy": {
-      "command": "npm run build && wrangler pages deploy ./build/client --project-name=your-project",
-      "dependsOn": ["build"]
-    },
-    "w:deploy:prod": {
-      "command": "npm run build && wrangler pages deploy ./build/client --project-name=your-project --branch=production",
-      "dependsOn": ["build"]
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
