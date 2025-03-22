@@ -22,4 +22,4 @@ CodePlus is a **developer-focused coding platform** that helps improve **problem
 - 🔹 **Prisma & PostgreSQL** – Scalable database management  
 - 🔹 **Tailwind CSS & ShadCN** – Beautiful, responsive design  
 - 🔹 **NextAuth** – Secure authentication  
-- 🔹 **Judge0 API** – Powerful online code compilation & execution  
+- 🔹 **Judge0 API** – Powerful online code compilation   
