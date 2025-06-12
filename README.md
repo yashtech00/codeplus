@@ -11,8 +11,7 @@ CodePlus is a **developer-focused coding platform** that helps improve **problem
 - ⚡ **Boilerplate Generation** – Problem seekers can add **problem details on GitHub**, and admins can **generate code with one command**.  
 - 🖥 **Online Code Editor** – Supports multiple programming languages.  
 - ⚙️ **Judge0 Integration** – Real-time **code compilation & execution** for instant feedback.  
-- 🔍 **Difficulty Levels** – Problems categorized as **Easy, Medium, Hard**.  
-- 📊 **Submission History** – Track and analyze your past submissions.  
+- 🔍 **Difficulty Levels** – Problems categorized as **Easy, Medium, Hard**.    
 - 🔗 **GitHub Integration** – Direct link to the repository for open-source contributions.  
 - 🌑 **Dark Mode UI** – A sleek, modern interface for a smooth coding experience.  
 
