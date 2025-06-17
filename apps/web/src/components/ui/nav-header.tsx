@@ -31,7 +31,7 @@ function NavHeader() {
   return (
     <>
       <ul
-        className="relative mx-auto flex w-fit flex-wrap md:flex-nowrap rounded-full border-2 border-gray-400 bg-natural-950 text-white p-1"
+        className="relative mx-auto flex w-fit flex-wrap md:flex-nowrap rounded-full  bg-natural-950 text-white p-1"
         onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
       >
        

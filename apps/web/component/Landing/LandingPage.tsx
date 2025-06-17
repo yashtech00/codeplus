@@ -7,13 +7,14 @@ const avatarUrls = [
     "https://avatars.githubusercontent.com/u/20110627",
     "https://avatars.githubusercontent.com/u/106103625",
     "https://avatars.githubusercontent.com/u/59228569",
+    "https://avatars.githubusercontent.com/u/20110627",
 ]
 
 
 
 export default function LandingPage() {
     return (
-        <div className="bg-neutral-950">
+        <div className="bg-neutral-950 ">
 
             <div className="relative flex h-[50rem] w-full items-center justify-center bg-white dark:bg-black">
                 <div

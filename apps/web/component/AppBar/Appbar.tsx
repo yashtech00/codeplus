@@ -10,8 +10,9 @@ export const AppBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <>
-      <div className="flex justify-between items-center w-full bg-neutral-950 px-4 py-4 absolute z-20">
+    <div className='flex justify-center '>
+      <div className=" w-[70%] mt-10 flex justify-between items-center px-4 py-2 fixed z-20 border border-stone-800 rounded-full backdrop-blur-md bg-white/10">
+
         {/* Logo Section */}
         <Link href={"/"}>
         <div className="flex items-center space-x-2">
@@ -37,7 +38,7 @@ export const AppBar = () => {
           >
             <Button className="flex items-center space-x-1 bg-blue-500 hover:bg-blue-600 text-white">
               <Star className="h-4 w-4" />
-              <span>Github Repo</span>
+              <span>Give us a star</span>
             </Button>
           </a>
         </div>
@@ -72,6 +73,6 @@ export const AppBar = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
