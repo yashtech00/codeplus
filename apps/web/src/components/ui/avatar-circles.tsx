@@ -15,7 +15,7 @@ const AvatarCircles = ({
 }: AvatarCirclesProps) => {
   return (
    
-    <div className={cn("z-10 flex -space-x-4 rtl:space-x-reverse bg-red-500  ", className)}>
+    <div className={cn("z-10 flex -space-x-4 rtl:space-x-reverse  ", className)}>
       {avatarUrls.map((url, index) => (
         <img
           key={index}

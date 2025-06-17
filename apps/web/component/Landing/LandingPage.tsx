@@ -28,20 +28,33 @@ export default function LandingPage() {
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
 
                 <div className='text-center'>
+                    <div className="flex justify-center">
+                        <p className='inline-block'>
+                            <AvatarCircles className='w-30' numPeople={99} avatarUrls={avatarUrls} />
+                        </p>
+                    </div>
 
-                     <AvatarCircles className='w-30' numPeople={99} avatarUrls={avatarUrls} />
-                    <p className='relative z-20 sm:text-sm text-neutral-400 text-center '>
-                       
-                        Trusted by 5M+ developers
+                    <p className='relative z-20 sm:text-sm text-neutral-400 text-center'>
+                        {"{Trusted by 5M+ developers}"}
                     </p>
 
                     <p className="relative z-20 bg-gradient-to-b from-neutral-100 to-neutral-200 bg-clip-text py-8 text-4xl font-bold text-transparent sm:text-5xl">
-                       Master Programming with CodePlus
+                        Master Programming with CodePlus
                     </p>
-                    <p className="relative z-20 bg-gradient-to-b from-neutral-200 to-neutral-300 bg-clip-text  text-4xl font-bold  sm:text-7xl text-blue-500">Tired of reading? Let’s start coding.</p>
-                    <p className="relative z-20  pt-8 pb-4 text-4xl  text-neutral-400 sm:text-lg">Join 5M+ students building projects, cracking contests, and landing internships.</p>
-                    <p className="relative z-20  text-4xl text-neutral-400  sm:text-lg">Kickstart Your Coding Journey – No Boring Lectures, Just Real Practice!</p>
+
+                    <p className="relative z-20 bg-gradient-to-b from-neutral-200 to-neutral-300 bg-clip-text text-4xl font-bold sm:text-7xl text-blue-500">
+                        Tired of reading? Let’s start coding.
+                    </p>
+
+                    <p className="relative z-20 pt-8 pb-4 text-4xl text-neutral-400 sm:text-lg">
+                        Join 5M+ students building projects, cracking contests, and landing internships.
+                    </p>
+
+                    <p className="relative z-20 text-4xl text-neutral-400 sm:text-lg">
+                        Kickstart Your Coding Journey – No Boring Lectures, Just Real Practice!
+                    </p>
                 </div>
+
             </div>
 
 
