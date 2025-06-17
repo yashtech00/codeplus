@@ -1,25 +1,49 @@
-import { BackgroundPaths } from "@/components/ui/background-paths";
 import { Code2, Github, Cpu } from 'lucide-react';
 import { cn } from "@/lib/utils";
+import { AvatarCircles } from "@/components/ui/avatar-circles"
+
+const avatarUrls = [
+    "https://avatars.githubusercontent.com/u/16860528",
+    "https://avatars.githubusercontent.com/u/20110627",
+    "https://avatars.githubusercontent.com/u/106103625",
+    "https://avatars.githubusercontent.com/u/59228569",
+]
+
+
 
 export default function LandingPage() {
     return (
         <div className="bg-neutral-950">
+
             <div className="relative flex h-[50rem] w-full items-center justify-center bg-white dark:bg-black">
-      <div
-        className={cn(
-          "absolute inset-0",
-          "[background-size:40px_40px]",
-          "[background-image:linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)]",
-          "dark:[background-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]",
-        )}
-      />
-      {/* Radial gradient for the container to give a faded look */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
-      <p className="relative z-20 bg-gradient-to-b from-neutral-200 to-neutral-300 bg-clip-text py-8 text-4xl font-bold text-transparent sm:text-7xl">
-        CodePlus
-      </p>
-    </div>
+                <div
+                    className={cn(
+                        "absolute inset-0",
+                        "[background-size:40px_40px]",
+                        "[background-image:linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)]",
+                        "dark:[background-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]",
+                    )}
+                />
+                {/* Radial gradient for the container to give a faded look */}
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
+
+                <div className='text-center'>
+
+                     <AvatarCircles className='w-30' numPeople={99} avatarUrls={avatarUrls} />
+                    <p className='relative z-20 sm:text-sm text-neutral-400 text-center '>
+                       
+                        Trusted by 5M+ developers
+                    </p>
+
+                    <p className="relative z-20 bg-gradient-to-b from-neutral-100 to-neutral-200 bg-clip-text py-8 text-4xl font-bold text-transparent sm:text-5xl">
+                       Master Programming with CodePlus
+                    </p>
+                    <p className="relative z-20 bg-gradient-to-b from-neutral-200 to-neutral-300 bg-clip-text  text-4xl font-bold  sm:text-7xl text-blue-500">Tired of reading? Let’s start coding.</p>
+                    <p className="relative z-20  pt-8 pb-4 text-4xl  text-neutral-400 sm:text-lg">Join 5M+ students building projects, cracking contests, and landing internships.</p>
+                    <p className="relative z-20  text-4xl text-neutral-400  sm:text-lg">Kickstart Your Coding Journey – No Boring Lectures, Just Real Practice!</p>
+                </div>
+            </div>
+
 
             {/* Features Section */}
             <section className="py-12 bg-neutral-950">
@@ -69,8 +93,8 @@ export default function LandingPage() {
                             <span className="text-xl font-bold text-white">CodePlus</span>
                         </div>
                         <div className="flex space-x-6">
-                        <a href="https://github.com/yashtech00" target="_blank" rel="noopener noreferrer" title="Visit our GitHub page">
-                            <Github className="h-6 w-6 text-gray-400 hover:text-white cursor-pointer" /></a>
+                            <a href="https://github.com/yashtech00" target="_blank" rel="noopener noreferrer" title="Visit our GitHub page">
+                                <Github className="h-6 w-6 text-gray-400 hover:text-white cursor-pointer" /></a>
                             <Cpu className="h-6 w-6 text-gray-400 hover:text-white cursor-pointer" />
                         </div>
                     </div>
@@ -82,15 +106,3 @@ export default function LandingPage() {
         </div>
     );
 }  
-
-
-
-
-// 
-// import React from "react";
-
-// export function GridBackgroundDemo() {
-//   return (
-    
-//   );
-// }
