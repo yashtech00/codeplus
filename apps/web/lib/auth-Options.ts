@@ -23,7 +23,6 @@ export const authOptions = {
         if (!credentials?.email || !credentials.password) {
           return null;
         }
-
         const emailValidation = emailSchema.safeParse(credentials.email);
         if (!emailValidation.success) {
           throw new Error("Please enter valid email");
@@ -103,28 +102,48 @@ export const authOptions = {
       return session;
     },
     async signIn({ account, profile }) {
-      try {
-        if (account?.provider === "github") {
-          const user = await prisma.user.findUnique({
-            where: {
-              email: profile?.email,
-            },
-          });
+  try {
+    if (account?.provider === "github") {
+      // GitHub may return null email — we fetch manually
+      let email = profile?.email;
 
-          if (!user) {
-            const newUser = await prisma.user.create({
-              data: {
-                email: profile?.email || "",
-                provider: "Github",
-              },
-            });
-          }
-        }
-        return true;
-      } catch (e) {
-        console.error(e);
-        return false 
+      if (!email && account.access_token) {
+        const res = await fetch("https://api.github.com/user/emails", {
+          headers: {
+            Authorization: `token ${account.access_token}`,
+            Accept: "application/vnd.github+json",
+          },
+        });
+        const emails = await res.json();
+        const primary = emails.find((e: any) => e.primary && e.verified);
+        email = primary?.email;
       }
-    },
+
+      if (!email) {
+        console.error("No email found from GitHub");
+        return false; // 🔥 Causes AccessDenied
+      }
+
+      // Continue login logic
+      const user = await prisma.user.findUnique({
+        where: { email },
+      });
+
+      if (!user) {
+        await prisma.user.create({
+          data: {
+            email,
+            provider: "Github",
+          },
+        });
+      }
+    }
+    return true;
+  } catch (err) {
+    console.error("Sign-in error:", err);
+    return false;
+  }
+}
+
   },
 } satisfies NextAuthOptions;

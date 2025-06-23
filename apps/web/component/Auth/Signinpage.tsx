@@ -81,7 +81,7 @@ function SigninPage() {
         <Dialog>
             <DialogTrigger asChild>
                 <button>
-                    Sign In
+                    Log In
                 </button>
             </DialogTrigger>
             <DialogContent>

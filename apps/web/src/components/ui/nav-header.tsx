@@ -34,8 +34,6 @@ function NavHeader() {
         className="relative mx-auto flex w-fit flex-wrap md:flex-nowrap rounded-full  bg-natural-950 text-white p-1"
         onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
       >
-       
-
         <Tab setPosition={setPosition}>
           <button onClick={handleProblem} className="cursor-pointer">
             Problems
@@ -44,6 +42,12 @@ function NavHeader() {
         
         <Link href={"/Discuss"}>
           <Tab setPosition={setPosition}>Discuss</Tab>
+        </Link>
+        <Link href={"/Contest"}>
+          <Tab setPosition={setPosition}>Contest</Tab>
+        </Link>
+        <Link href={"/Learning"}>
+          <Tab setPosition={setPosition}>Learning</Tab>
         </Link>
         {session?.user.id ? (
           <Tab setPosition={setPosition}>

@@ -29,14 +29,14 @@ function SignupPage() {
         return null; // ✅ Fix hydration mismatch by preventing unstable rendering
     }
 
-    const SigninProvider = (provider: "github" | "credentials") => {
+    const SignUpProvider = (provider: "github" | "credentials") => {
         try {
             if (provider === "credentials") {
                 signIn(provider, {
                     email,
                     password,
                     redirect: false,
-                    callbackUrl: "/problems",
+                    callbackUrl:"/problems",
                 }).then((res) => {
                     if (res?.error) {
                         setError(res.error);
@@ -70,19 +70,19 @@ function SignupPage() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError("");
-        SigninProvider("credentials");
+        SignUpProvider("credentials");
     };
 
     const handleGithub = () => {
         setError("");
-        SigninProvider("github");
+        SignUpProvider("github");
         setLoading(true);
     };
 
     return (
         <Dialog>
     <DialogTrigger asChild>
-        {session?.data?.user ? null : <button>Sign up</button>}
+        {session?.data?.user ? null : <button className="bg-blue-500 ">Sign up</button>}
     </DialogTrigger>
     <DialogContent>
         <DialogHeader>

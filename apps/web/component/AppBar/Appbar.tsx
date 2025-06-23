@@ -11,7 +11,7 @@ export const AppBar = () => {
 
   return (
     <div className='flex justify-center '>
-      <div className=" w-[70%] mt-10 flex justify-between items-center px-4 py-2 fixed z-20 border border-stone-800 rounded-full backdrop-blur-md bg-white/10">
+      <div className=" w-[70%] mt-10 flex justify-between items-center px-4 py-2 fixed z-50 border border-stone-800 rounded-full backdrop-blur-md bg-white/10">
 
         {/* Logo Section */}
         <Link href={"/"}>
@@ -29,7 +29,7 @@ export const AppBar = () => {
         </div>
 
         {/* GitHub Button - Hidden on mobile */}
-        <div className="hidden md:block">
+        {/* <div className="hidden md:block">
           <a
             href="https://github.com/yashtech00/codeplus"
             target="_blank"
@@ -41,7 +41,7 @@ export const AppBar = () => {
               <span>Give us a star</span>
             </Button>
           </a>
-        </div>
+        </div> */}
 
         {/* Mobile Menu Button */}
         <button
@@ -58,7 +58,7 @@ export const AppBar = () => {
         <div className="md:hidden fixed top-16 left-0 right-0 bg-neutral-950 z-10 px-4 py-4 border-t border-gray-800">
           <div className="flex flex-col space-y-4">
             <NavHeader />
-            <a
+            {/* <a
               href="https://github.com/yashtech00/codeplus"
               target="_blank"
               rel="noopener noreferrer"
@@ -69,7 +69,7 @@ export const AppBar = () => {
                 <Star className="h-4 w-4" />
                 <span>Github Repo</span>
               </Button>
-            </a>
+            </a> */}
           </div>
         </div>
       )}
