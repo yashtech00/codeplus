@@ -11,12 +11,6 @@ import { Toaster } from "sonner";
 import { useRouter } from "next/navigation";
 
 function NavHeader() {
-  const [position, setPosition] = useState({
-    left: 0,
-    width: 0,
-    opacity: 0,
-  });
-
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -31,85 +25,47 @@ function NavHeader() {
   return (
     <>
       <ul
-        className="relative mx-auto flex w-fit flex-wrap md:flex-nowrap rounded-full  bg-natural-950 text-white p-1"
-        onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
+        className="relative mx-auto flex w-fit flex-wrap md:flex-nowrap rounded-full  bg-natural-950 text-white py-4 space-x-6 items-center "
+        
       >
-        <Tab setPosition={setPosition}>
+
+        <div className="hover:text-blue-500">
           <button onClick={handleProblem} className="cursor-pointer">
             Problems
           </button>
-        </Tab>
-        
+        </div>
         <Link href={"/Discuss"}>
-          <Tab setPosition={setPosition}>Discuss</Tab>
+          <div className="hover:text-blue-500">Discuss</div>
         </Link>
         <Link href={"/Contest"}>
-          <Tab setPosition={setPosition}>Contest</Tab>
+          <div className="hover:text-blue-500">Contest</div>
         </Link>
         <Link href={"/Learning"}>
-          <Tab setPosition={setPosition}>Learning</Tab>
+          <div className="hover:text-blue-500">Learning</div>
         </Link>
         {session?.user.id ? (
-          <Tab setPosition={setPosition}>
+          <div className="hover:text-blue-500">
             <button onClick={() => signOut({ callbackUrl: "/" })} >
-           Logout
-       </button>
-          </Tab>
-           
-      ) : (
-        <>
-          <Tab setPosition={setPosition}>
-            <SigninPage />
-          </Tab>
-          <Tab setPosition={setPosition}>
-            <SignupPage />
-          </Tab>
-        </>
-      )}
-        
+              Logout
+            </button>
+          </div>
 
-        <Cursor position={position} />
+        ) : (
+          <>
+            <div className="hover:text-blue-500">
+              <SigninPage />
+            </div>
+            <div className="hover:text-white">
+              <SignupPage />
+            </div>
+          </>
+        )}
       </ul>
       <Toaster />
     </>
   );
 }
 
-const Tab = ({
-  children,
-  setPosition,
-}: {
-  children: React.ReactNode;
-  setPosition: any;
-}) => {
-  const ref = React.useRef<HTMLLIElement>(null);
-  return (
-    <li
-      ref={ref}
-      onMouseEnter={() => {
-        if (!ref.current) return;
 
-        const { width } = ref.current.getBoundingClientRect();
-        setPosition({
-          width,
-          opacity: 1,
-          left: ref.current.offsetLeft,
-        });
-      }}
-      className="relative z-10 block cursor-pointer px-2 py-1 text-xs text-white mix-blend-difference md:px-5 md:py-3 md:text-base"
-    >
-      {children}
-    </li>
-  );
-};
-
-const Cursor = ({ position }: { position: any }) => {
-  return (
-    <motion.li
-      animate={position}
-      className="absolute z-0 h-7 rounded-full bg-white md:h-12"
-    />
-  );
-};
 
 export default NavHeader;
