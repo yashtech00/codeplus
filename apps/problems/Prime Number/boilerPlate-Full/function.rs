@@ -7,7 +7,7 @@
     let stdin = io::stdin();
     let mut input = stdin.lock().lines().map(|l| l.unwrap());
     let n: i32 = input.next().unwrap().parse().unwrap();
-    let result = isPrime(n);
+    let result = minimumStep(n);
     println!("{}", result);
   }
       

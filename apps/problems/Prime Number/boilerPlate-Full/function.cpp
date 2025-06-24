@@ -7,7 +7,7 @@
   
   int main() {
     std::cin >> n;
-    boolean result = isPrime(n);
+    int result = minimumStep(n);
     std::cout << result << std::endl;
     return 0;
   }

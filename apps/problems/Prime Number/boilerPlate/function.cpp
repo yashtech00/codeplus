@@ -1,4 +1,4 @@
-boolean isPrime(int n) {
+int minimumStep(int n) {
     // Implementation goes here
     return result;
 }
