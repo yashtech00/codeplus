@@ -3,21 +3,20 @@ import { useEffect, useState } from "react";
 import { ProblemStatement } from "../../../component/ProblemStatement";
 import { IProblem, ProblemSubmitBar } from "../../../component/ProblemSubmitBar";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 
-export default async function ProblemPage({
-  params: { problemId },
-}: {
-  params: {
-    problemId: string;
-  };
-}) {
+export default async function ProblemPage() {
+ 
+  const problemId = useSearchParams();
   const [prob, setProb] = useState<IProblem>();
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await axios.get(`api/problem/${problemId}`)
-        console.log(res,"one problem");
+        console.log(problemId);
         
+        const res = await axios.get(`api/problem/${problemId}`)
+        console.log(res, "one problem");
+
         setProb(res.data);
       } catch (e) {
         console.error("Error getting problem by id");
