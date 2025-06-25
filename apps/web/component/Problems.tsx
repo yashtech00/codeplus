@@ -1,10 +1,14 @@
-import { getProblems } from "../db/problem";
+"use client";
+
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Building, Code2 } from "lucide-react";
 import Link from "next/link";
 import { ProblemSearch } from "./Filter";
 import { Button } from "@/components/ui/button";
+import { useSearchParams } from "next/navigation";
 
 interface Problem {
   id: string;
@@ -13,20 +17,27 @@ interface Problem {
   companyName: string;
 }
 
-export async function Problems({ searchParams }: { searchParams?: { q?: string } }) {
-  let problems: Problem[] = [];
+export function Problems() {
+  const [problems, setProblems] = useState<Problem[]>([]);
+  const searchParams = useSearchParams();
+  const query = searchParams.get("q")?.toLowerCase() || "";
 
-  try {
-    problems = await getProblems();
-  } catch (error) {
-    console.error('Error fetching problems:', error);
-  }
+  useEffect(() => {
+    const fetchProblems = async () => {
+      try {
+        const res = await axios.get("/api/problems");
+        setProblems(res.data);
+      } catch (error) {
+        console.error("Error fetching problems:", error);
+      }
+    };
 
-  // Filter problems based on search query
-  const query = searchParams?.q?.toLowerCase() || "";
+    fetchProblems();
+  }, []);
+
   const filteredProblems = query
     ? problems.filter(
-        (problem: Problem) =>
+        (problem) =>
           problem.title.toLowerCase().includes(query) ||
           problem.difficulty.toLowerCase().includes(query) ||
           problem.companyName.toLowerCase().includes(query)
@@ -61,7 +72,7 @@ export async function Problems({ searchParams }: { searchParams?: { q?: string }
                     </TableCell>
                   </TableRow>
                 ) : (
-                  filteredProblems.map((problem: Problem) => (
+                  filteredProblems.map((problem) => (
                     <TableRow
                       key={problem.id}
                       className="border-neutral-700 transition-colors hover:bg-neutral-700/30 cursor-pointer"

@@ -23,6 +23,7 @@
   ],
   "dependencies": {
     "@prisma/nextjs-monorepo-workaround-plugin": "^6.5.0",
+    "axios": "^1.10.0",
     "core-js": "^3.41.0",
     "zod": "^3.24.2"
   }
