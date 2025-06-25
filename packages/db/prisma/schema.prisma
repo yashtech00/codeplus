@@ -1,12 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  
 }
 
 datasource db {
@@ -19,24 +12,24 @@ model User {
   name       String?
   email      String       @unique
   password   String?
-  provider   Provider
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
-  submission Submission[]
-  discuss    Discuss[]
+  provider   Provider
   comment    Comment[]
+  discuss    Discuss[]
+  submission Submission[]
 }
 
 model Discuss {
   id           String    @id @default(uuid())
   title        String
   description  String?
-  upVote       Int?      @default(0)
-  downVote     Int?      @default(0)
-  commentCount Int?      @default(0)
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
   userId       String
+  createdAt    DateTime  @default(now())
+  downVote     Int?      @default(0)
+  upVote       Int?      @default(0)
+  updatedAt    DateTime  @updatedAt
+  commentCount Int?      @default(0)
   comment      Comment[]
   user         User      @relation(fields: [userId], references: [id])
 }
@@ -56,26 +49,26 @@ model Problem {
   id          String        @id @default(uuid())
   title       String
   description String
-  solved      Int           @default(0)
-  companyName String
   hidden      Boolean       @default(true)
   slug        String        @unique
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   difficulty  Difficulty    @default(MEDIUM)
+  solved      Int           @default(0)
+  companyName String
   defaultCode DefaultCode[]
   submission  Submission[]
 }
 
 model DefaultCode {
   id         String   @id @default(uuid())
-  languageId Int
   problemId  String
   code       String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  problem    Problem  @relation(fields: [problemId], references: [id])
+  languageId Int
   language   Language @relation(fields: [languageId], references: [id])
+  problem    Problem  @relation(fields: [problemId], references: [id])
 
   @@unique([problemId, languageId])
 }
@@ -83,19 +76,19 @@ model DefaultCode {
 model Submission {
   id         String           @id @default(uuid())
   problemId  String
-  languageId Int
   userId     String
   createdAt  DateTime         @default(now())
   updatedAt  DateTime         @updatedAt
   code       String
   FullCode   String
   status     SubmissionResult @default(PENDING)
-  testCases  TestCase[]
   memory     Int?
   time       Float?
-  user       User             @relation(fields: [userId], references: [id])
-  problem    Problem          @relation(fields: [problemId], references: [id])
+  languageId Int
   language   Language         @relation(fields: [languageId], references: [id])
+  problem    Problem          @relation(fields: [problemId], references: [id])
+  user       User             @relation(fields: [userId], references: [id])
+  testCases  TestCase[]
 }
 
 model TestCase {
@@ -104,21 +97,21 @@ model TestCase {
   updatedAt        DateTime       @updatedAt
   status           TestCaseResult @default(PENDING)
   index            Int
-  submission       Submission     @relation(fields: [submissionId], references: [id])
   submissionId     String
   memory           Int?
   time             Float?
   judge0TrackingId String         @unique
+  submission       Submission     @relation(fields: [submissionId], references: [id])
 }
 
 model Language {
-  id          Int           @id @default(autoincrement())
   name        String
   judge0Id    Int           @unique
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
-  submission  Submission[]
+  id          Int           @id @default(autoincrement())
   defaultCode DefaultCode[]
+  submission  Submission[]
 }
 
 enum Difficulty {

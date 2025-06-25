@@ -21,7 +21,8 @@ export interface IProblem {
   id: string;  
   title: string;  
   description: string;  
-  slug: string;  
+  slug: string;
+  difficulty:string
   defaultCode: {  
     languageId: number;  
     code: string;  

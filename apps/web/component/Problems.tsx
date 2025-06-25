@@ -26,6 +26,8 @@ export function Problems() {
     const fetchProblems = async () => {
       try {
         const res = await axios.get("/api/problems");
+        console.log(res.data,"res problems");
+        
         setProblems(res.data);
       } catch (error) {
         console.error("Error fetching problems:", error);
