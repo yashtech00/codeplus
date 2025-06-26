@@ -1,37 +1,39 @@
-"use client"
+"use client";
+
 import { useEffect, useState } from "react";
 import { ProblemStatement } from "../../../component/ProblemStatement";
 import { IProblem, ProblemSubmitBar } from "../../../component/ProblemSubmitBar";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 
-export default async function ProblemPage() {
+export default function ProblemPage() {
+  const [prob, setProb] = useState<IProblem | null>(null);
+  const params = useParams();
+  const problemId = params.problemId as string;
  
-  const problemId = useSearchParams();
-  const [prob, setProb] = useState<IProblem>();
+
   useEffect(() => {
+    if (!problemId) return;
+  
+     console.log(problemId,"id of problem");
+
     const fetch = async () => {
       try {
-        console.log(problemId);
+        const res = await axios.get(`/api/problems/${problemId}`);
+        console.log(res,"problem res");
         
-        const res = await axios.get(`api/problem/${problemId}`)
-        console.log(res, "one problem");
-
         setProb(res.data);
       } catch (e) {
-        console.error("Error getting problem by id");
+        console.error("Error getting problem by id", e);
       }
-    }
+    };
 
-  }, [])
-
-
-  // const problem = await getProblem(problemId);
+    fetch();
+  }, [problemId]);
 
   if (!prob) {
     return <div>Problem not found</div>;
   }
-
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-neutral-950 to-neutral-900">
@@ -46,4 +48,3 @@ export default async function ProblemPage() {
     </div>
   );
 }
-export const dynamic = "force-dynamic";

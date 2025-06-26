@@ -5,7 +5,8 @@ import prisma from "../../../../db";
 // This runs when a GET request is made to /api/problem/[id]
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   const problemId = params.id;
-
+  console.log(problemId,"backend problem id");
+  
   try {
     const problem = await prisma.problem.findFirst({
       where: { id: problemId },

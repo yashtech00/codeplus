@@ -11,7 +11,7 @@ export const AppBar = () => {
 
   return (
     <div className='flex justify-center '>
-      <div className=" w-[70%] mt-10 flex justify-between items-center px-4 py-2 fixed z-50 border border-stone-800 rounded-full backdrop-blur-md bg-white/10">
+      <div className=" w-[70%] mt-6 flex justify-between items-center px-4 py-2 fixed z-50 border border-stone-800 rounded-full backdrop-blur-md bg-white/10">
 
         {/* Logo Section */}
         <Link href={"/"}>
