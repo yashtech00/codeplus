@@ -25,10 +25,8 @@ function NavHeader() {
   return (
     <>
       <ul
-        className="relative mx-auto flex w-fit flex-wrap md:flex-nowrap rounded-full  bg-natural-950 text-white py-4 space-x-6 items-center "
-        
+        className="relative mx-auto flex w-fit flex-wrap md:flex-nowrap rounded-full  bg-natural-950 text-white py-2 space-x-6 items-center " 
       >
-
         <div className="hover:text-blue-500">
           <button onClick={handleProblem} className="cursor-pointer">
             Problems
@@ -49,7 +47,6 @@ function NavHeader() {
               Logout
             </button>
           </div>
-
         ) : (
           <>
             <div className="hover:text-blue-500">

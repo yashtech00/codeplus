@@ -121,3 +121,9 @@ async function getProblemOutputs(problemId: string): Promise<string[]> {
         );
     });
 }
+
+// async function getproblemDifficulty(problemId: string): Promise<string[]>{
+//     return new Promise((resolve, reject) => {
+//         fs.readdir()
+//     })
+// }
