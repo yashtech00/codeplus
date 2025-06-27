@@ -34,63 +34,43 @@ export const ProblemSubmitBar = ({
 }: {  
   problem: IProblem;  
 }) => {  
-  const [activeTab, setActiveTab] = useState("problem");  
+ 
 
   return (  
     <div className="bg-neutral-800 rounded-2xl p-6 shadow-lg border border-neutral-700">  
-      <div className="grid gap-4">  
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">  
-          <div>  
-            <Tabs defaultValue="problem" className="rounded-md p-1" value={activeTab} onValueChange={setActiveTab}>  
-              <TabsList className="grid grid-cols-2 w-full bg-gray-100">  
-                <TabsTrigger  
-                  value="problem"  
-                  className="data-[state=active]:bg-white"  
-                >  
-                  Submit  
-                </TabsTrigger>  
-                <TabsTrigger  
-                  value="submissions"  
-                  className="data-[state=active]:bg-white"  
-                >  
-                  Submissions  
-                </TabsTrigger>  
-              </TabsList>  
-            </Tabs>  
-          </div>  
-        </div>  
+      <div className="grid gap-4 border-4">  
         
-        <div className={`${activeTab === "problem" ? "" : "hidden"}`}>  
+        {/* <div className={`${activeTab === "problem" ? "" : "hidden"} border-4 border-red-500`}>   */}
           <SubmitProblem problem={problem} />  
-        </div>  
-        {activeTab === "submissions" && <Submissions problem={problem} />}  
+        {/* </div>   */}
+        {/* {activeTab === "submissions" && <Submissions problem={problem} />}   */}
       </div>  
     </div>  
   );  
 };  
 
-function Submissions({ problem }: { problem: IProblem }) {  
-  const [submissions, setSubmissions] = useState<ISubmission[]>([]);  
+// function Submissions({ problem }: { problem: IProblem }) {  
+//   const [submissions, setSubmissions] = useState<ISubmission[]>([]);  
 
-  useEffect(() => {  
-    console.log("yash submission before");
+//   useEffect(() => {  
+//     console.log("yash submission before");
     
-    const fetchData = async () => {  
-      const response = await axios.get(`/api/submission/bulk?problemId=${problem.id}`);  
-      setSubmissions(response.data.Submission || []); 
-      console.log("yash submission " , response.data.Submission);
+//     const fetchData = async () => {  
+//       const response = await axios.get(`/api/submission/bulk?problemId=${problem.id}`);  
+//       setSubmissions(response.data.Submission || []); 
+//       console.log("yash submission " , response.data.Submission);
       
-    };  
-    fetchData(); 
+//     };  
+//     fetchData(); 
     
-  }, [problem.id]);  
+//   }, [problem.id]);  
 
-  return (  
-    <div>  
-      <SubmissionTable submissions={submissions} />  
-    </div>  
-  );  
-}  
+//   return (  
+//     <div>  
+//       <SubmissionTable submissions={submissions} />  
+//     </div>  
+//   );  
+// }  
 
 function SubmitProblem({  
   problem,  
